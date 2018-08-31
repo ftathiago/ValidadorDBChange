@@ -118,6 +118,10 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     end
     object TabSheet1: TTabSheet
       Caption = 'XML (Texto)'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object memXML: TMemo
         Left = 0
         Top = 33

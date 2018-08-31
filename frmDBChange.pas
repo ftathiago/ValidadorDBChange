@@ -229,7 +229,6 @@ begin
   cdsDBChange.Edit;
   cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome) or
     cdsDBChangeValue.AsString.Equals(ANome);
-  cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
   cdsDBChange.Post;
   if cdsDBChangeRepetido.AsBoolean then
   begin
@@ -266,7 +265,9 @@ begin
   _xmlDoc := TXMLDocument.Create(nil);
   _xmlDoc.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix, doNamespaceDecl,
     doAutoSave];
+
   DataSetToXML(_xmlDoc);
+
   _xmlDoc.Version := '1.0';
   _xmlDoc.Encoding := 'UTF-8';
   _xmlDoc.StandAlone := 'no';
