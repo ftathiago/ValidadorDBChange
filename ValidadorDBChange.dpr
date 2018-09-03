@@ -3,7 +3,9 @@ program ValidadorDBChange;
 uses
   Vcl.Forms,
   dbChange in 'dbChange.pas',
-  frmDBChange in 'frmDBChange.pas' {frmValidadorDBChange};
+  frmDBChange in 'frmDBChange.pas' {frmValidadorDBChange},
+  uLocalizadorScript in 'uLocalizadorScript.pas',
+  uAnalizadorScript in 'uAnalizadorScript.pas';
 
 {$R *.res}
 

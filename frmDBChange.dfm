@@ -42,6 +42,14 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       Caption = 'Marcar repetidos'
       OnClick = SpeedButton1Click
     end
+    object Analisar: TSpeedButton
+      Left = 117
+      Top = 38
+      Width = 99
+      Height = 22
+      Caption = 'Analisar dados'
+      OnClick = AnalisarClick
+    end
     object edtFileName: TEdit
       Left = 96
       Top = 8
@@ -58,7 +66,7 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     Top = 75
     Width = 813
     Height = 433
-    ActivePage = tbsScript
+    ActivePage = tbsRelacaoScriptArquivo
     Align = alClient
     TabOrder = 1
     object tbsScript: TTabSheet
@@ -118,10 +126,6 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     end
     object TabSheet1: TTabSheet
       Caption = 'XML (Texto)'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object memXML: TMemo
         Left = 0
         Top = 33
@@ -154,6 +158,24 @@ object frmValidadorDBChange: TfrmValidadorDBChange
           Caption = 'Salvar XML'
           OnClick = SpeedButton4Click
         end
+      end
+    end
+    object tbsRelacaoScriptArquivo: TTabSheet
+      Caption = 'Rela'#231#227'o Script x Arquivo'
+      ImageIndex = 2
+      object DBGrid2: TDBGrid
+        Left = 0
+        Top = 0
+        Width = 805
+        Height = 405
+        Align = alClient
+        DataSource = dtsArquivos
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
       end
     end
   end
@@ -198,6 +220,10 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       DisplayWidth = 5
       FieldName = 'Importar'
     end
+    object cdsDBChangeExisteNaPasta: TBooleanField
+      DisplayLabel = 'Existe'
+      FieldName = 'ExisteNaPasta'
+    end
     object cdsDBChangeNome: TStringField
       DisplayWidth = 25
       FieldName = 'Nome'
@@ -231,5 +257,55 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     FileName = 'dbChange.xml'
     Left = 574
     Top = 189
+  end
+  object cdsArquivos: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 400
+    Top = 256
+    object cdsArquivosPATH: TStringField
+      FieldName = 'PATH'
+      Size = 600
+    end
+    object cdsArquivosNOME_ARQUIVO: TStringField
+      FieldName = 'NOME_ARQUIVO'
+      Size = 50
+    end
+  end
+  object dtsArquivos: TDataSource
+    DataSet = cdsArquivos
+    Left = 400
+    Top = 304
+  end
+  object DirOpen: TOpenDialog
+    Left = 404
+    Top = 171
+  end
+  object cdsAnalise: TFDMemTable
+    IndexFieldNames = 'NOME_SCRIPT'
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 328
+    Top = 256
+    object cdsAnaliseNOME_SCRIPT: TStringField
+      DisplayLabel = 'Script'
+      FieldName = 'NOME_SCRIPT'
+      Size = 50
+    end
+    object cdsAnaliseNOME_ARQUIVO: TStringField
+      DisplayLabel = 'Arquivo'
+      FieldName = 'NOME_ARQUIVO'
+      Size = 50
+    end
   end
 end

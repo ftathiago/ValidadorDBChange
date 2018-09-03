@@ -42,6 +42,18 @@ type
     cdsDBChangeImportar: TBooleanField;
     cdsDBChangeOrdemOriginal: TIntegerField;
     SaveDialog: TSaveDialog;
+    cdsArquivos: TFDMemTable;
+    cdsArquivosPATH: TStringField;
+    Analisar: TSpeedButton;
+    tbsRelacaoScriptArquivo: TTabSheet;
+    DBGrid2: TDBGrid;
+    dtsArquivos: TDataSource;
+    DirOpen: TOpenDialog;
+    cdsDBChangeExisteNaPasta: TBooleanField;
+    cdsAnalise: TFDMemTable;
+    cdsAnaliseNOME_SCRIPT: TStringField;
+    cdsAnaliseNOME_ARQUIVO: TStringField;
+    cdsArquivosNOME_ARQUIVO: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure btnAbrirDbChangeClick(Sender: TObject);
     procedure DBGrid1TitleClick(Column: TColumn);
@@ -51,6 +63,7 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     procedure edtLocalizarSCRIPTChange(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
+    procedure AnalisarClick(Sender: TObject);
   private
     { Private declarations }
     FNomeArquivoXML: TFileName;
@@ -71,7 +84,7 @@ implementation
 {$R *.dfm}
 
 uses
-  System.StrUtils;
+  System.StrUtils, uLocalizadorScript, uAnalizadorScript;
 
 procedure TfrmValidadorDBChange.AbrirDBChange(const AFileName: TFileName);
 var
@@ -105,6 +118,11 @@ begin
     cdsDBChange.Post;
   end;
   cdsDBChange.EnableControls;
+end;
+
+procedure TfrmValidadorDBChange.AnalisarClick(Sender: TObject);
+begin
+  TAnalisadorScript.New(cdsAnalise, cdsDBChange, cdsArquivos).Analisar;
 end;
 
 procedure TfrmValidadorDBChange.AplicarFiltro(const AFiltro: TTipoFiltro);
@@ -144,6 +162,7 @@ procedure TfrmValidadorDBChange.cdsDBChangeNewRecord(DataSet: TDataSet);
 begin
   cdsDBChangeRepetido.AsBoolean := False;
   cdsDBChangeImportar.AsBoolean := True;
+  cdsDBChangeExisteNaPasta.AsBoolean := True;
 end;
 
 procedure TfrmValidadorDBChange.DataSetToXML(const AXMLDoc: IXMLDocument);
@@ -197,7 +216,7 @@ begin
     exit;
 
   if not cdsDBChangeNome.AsString.Trim.IsEmpty then
-  _script.A_name := cdsDBChangeNome.AsString;
+    _script.A_name := cdsDBChangeNome.AsString;
 end;
 
 procedure TfrmValidadorDBChange.DBGrid1TitleClick(Column: TColumn);
@@ -217,6 +236,7 @@ end;
 procedure TfrmValidadorDBChange.FormCreate(Sender: TObject);
 begin
   cdsDBChange.CreateDataSet;
+  cdsArquivos.CreateDataSet;
 end;
 
 procedure TfrmValidadorDBChange.MarcarRepetidos(const ANome: string);
