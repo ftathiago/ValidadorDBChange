@@ -91,12 +91,17 @@ end;
 procedure TAnalisadorScript.CarregarScriptsNaAnalise;
 begin
   FDBChange.First;
-  while not FDBChange.Eof do
-  begin
-    FAnalise.Insert;
-    FAnaliseNOME_SCRIPT.AsString := FDBChangeNome.AsString;
-    FAnalise.Post;
-    FDBChange.Next;
+  FAnalise.DisableControls;
+  try
+    while not FDBChange.Eof do
+    begin
+      FAnalise.Insert;
+      FAnaliseNOME_SCRIPT.AsString := FDBChangeNome.AsString;
+      FAnalise.Post;
+      FDBChange.Next;
+    end;
+  finally
+    FAnalise.EnableControls;
   end;
 end;
 
@@ -106,12 +111,14 @@ begin
   with TFileOpenDialog.Create(nil) do
     try
       Title := 'Escolha o diretório raíz do dbChange';
-      Options := [fdoPickFolders, fdoPathMustExist, fdoForceFileSystem]; // YMMV
+      Options := [fdoPickFolders, fdoPathMustExist, fdoForceFileSystem]; //YMMV
       OkButtonLabel := 'Selecionar';
       DefaultFolder := EmptyStr;
       FileName := EmptyStr;
-      if Execute then
-        TLocalizadorDeScript.New(FArquivos).Localizar(FileName);
+      if not Execute then
+        Abort;
+
+      TLocalizadorDeScript.New(FArquivos).Localizar(FileName);
     finally
       Free;
     end
@@ -120,15 +127,20 @@ end;
 procedure TAnalisadorScript.CarregarArquivosNaAnalise;
 begin
   FArquivos.First;
-  while not FArquivos.Eof do
-  begin
-    if FAnalise.FindKey([FArquivosNOME_ARQUIVO.AsString]) then
-      FAnalise.Edit
-    else
-      FAnalise.Insert;
-    FAnaliseNOME_ARQUIVO.AsString := FArquivosNOME_ARQUIVO.AsString;
-    FArquivos.Post;
-    FArquivos.Next;
+  FAnalise.DisableControls;
+  try
+    while not FArquivos.Eof do
+    begin
+      if FAnalise.FindKey([FArquivosNOME_ARQUIVO.AsString]) then
+        FAnalise.Edit
+      else
+        FAnalise.Insert;
+      FAnaliseNOME_ARQUIVO.AsString := FArquivosNOME_ARQUIVO.AsString;
+      FAnalise.Post;
+      FArquivos.Next;
+    end;
+  finally
+    FAnalise.EnableControls;
   end;
 end;
 

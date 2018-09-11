@@ -165,17 +165,47 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       ImageIndex = 2
       object DBGrid2: TDBGrid
         Left = 0
-        Top = 0
+        Top = 67
         Width = 805
-        Height = 405
+        Height = 338
         Align = alClient
-        DataSource = dtsArquivos
+        DataSource = dtsAnalise
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+      end
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 805
+        Height = 67
+        Align = alTop
+        TabOrder = 1
+        object rgpFiltroAnalise: TRadioGroup
+          Left = 4
+          Top = 5
+          Width = 357
+          Height = 47
+          Caption = ' Filtrar '
+          Columns = 3
+          Items.Strings = (
+            'Todos'
+            'Script sem arquivo'
+            'Arquivo sem script')
+          TabOrder = 0
+          OnClick = rgpFiltroAnaliseClick
+        end
+        object edtLocalizarScriptAnalise: TEdit
+          Left = 367
+          Top = 24
+          Width = 162
+          Height = 21
+          TabOrder = 1
+          OnKeyUp = edtLocalizarScriptAnaliseKeyUp
+        end
       end
     end
   end
@@ -307,5 +337,10 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       FieldName = 'NOME_ARQUIVO'
       Size = 50
     end
+  end
+  object dtsAnalise: TDataSource
+    DataSet = cdsAnalise
+    Left = 326
+    Top = 308
   end
 end

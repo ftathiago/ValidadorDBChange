@@ -11,6 +11,7 @@ uses
 
 type
   TTipoFiltro = (tfTodos, tfRepetidos, tfImportar);
+  TTipoFiltroAnalise = (tfaTodos, tfaScriptSemArquivo, tfaArquivoSemScript);
 
   TfrmValidadorDBChange = class(TForm)
     pnlAbrirDbChange: TPanel;
@@ -54,6 +55,10 @@ type
     cdsAnaliseNOME_SCRIPT: TStringField;
     cdsAnaliseNOME_ARQUIVO: TStringField;
     cdsArquivosNOME_ARQUIVO: TStringField;
+    dtsAnalise: TDataSource;
+    Panel3: TPanel;
+    rgpFiltroAnalise: TRadioGroup;
+    edtLocalizarScriptAnalise: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnAbrirDbChangeClick(Sender: TObject);
     procedure DBGrid1TitleClick(Column: TColumn);
@@ -64,12 +69,15 @@ type
     procedure edtLocalizarSCRIPTChange(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
     procedure AnalisarClick(Sender: TObject);
+    procedure edtLocalizarScriptAnaliseKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure rgpFiltroAnaliseClick(Sender: TObject);
   private
     { Private declarations }
     FNomeArquivoXML: TFileName;
     procedure AbrirDBChange(const AFileName: TFileName);
     procedure MarcarRepetidos(const ANome: string);
     procedure AplicarFiltro(const AFiltro: TTipoFiltro);
+    procedure AplicarFiltroAnalise(const AFiltro: TTipoFiltroAnalise);
     procedure DataSetToXML(const AXMLDoc: IXMLDocument);
     procedure AtribuirNomeScriptAoXML(_script: IXMLScriptType);
   public
@@ -143,6 +151,29 @@ begin
       end;
   end;
   cdsDBChange.Filtered := AFiltro <> tfTodos;
+end;
+
+procedure TfrmValidadorDBChange.AplicarFiltroAnalise(const AFiltro: TTipoFiltroAnalise);
+const
+  FILTRAR_N_REGISTROS = ' Filtrar (%d registros) ';
+begin
+  case AFiltro of
+    tfaTodos:
+      begin
+        cdsAnalise.Filter := EmptyStr;
+      end;
+    tfaScriptSemArquivo:
+      begin
+        cdsAnalise.Filter := '(NOME_SCRIPT IS NOT NULL) AND (NOME_ARQUIVO IS NULL)';
+      end;
+    tfaArquivoSemScript:
+      begin
+        cdsAnalise.Filter := '(NOME_SCRIPT IS NULL) AND (NOME_ARQUIVO IS NOT NULL)';
+      end;
+  end;
+  cdsAnalise.Filtered := AFiltro <> tfaTodos;
+  rgpFiltroAnalise.ItemIndex := Ord(AFiltro);
+  rgpFiltroAnalise.Caption := Format(FILTRAR_N_REGISTROS, [cdsAnalise.RecordCount]);
 end;
 
 procedure TfrmValidadorDBChange.btnAbrirDbChangeClick(Sender: TObject);
@@ -224,6 +255,22 @@ begin
   cdsDBChange.IndexFieldNames := Column.Field.FieldName;
 end;
 
+procedure TfrmValidadorDBChange.edtLocalizarScriptAnaliseKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  _script: string;
+begin
+  _script := edtLocalizarScriptAnalise.Text;
+
+  if cdsAnalise.IsEmpty then
+    exit;
+  if _script.Trim.IsEmpty then
+    exit;
+  if cdsAnalise.Locate('NOME_SCRIPT', _script, [loPartialKey, loCaseInsensitive]) then
+    exit;
+  cdsAnalise.Locate('NOME_ARQUIVO', _script, [loPartialKey, loCaseInsensitive]);
+end;
+
 procedure TfrmValidadorDBChange.edtLocalizarSCRIPTChange(Sender: TObject);
 begin
   if not cdsDBChange.Active then
@@ -237,6 +284,7 @@ procedure TfrmValidadorDBChange.FormCreate(Sender: TObject);
 begin
   cdsDBChange.CreateDataSet;
   cdsArquivos.CreateDataSet;
+  cdsAnalise.CreateDataSet;
 end;
 
 procedure TfrmValidadorDBChange.MarcarRepetidos(const ANome: string);
@@ -249,18 +297,24 @@ begin
   cdsDBChange.Edit;
   cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome) or
     cdsDBChangeValue.AsString.Equals(ANome);
+  cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;    
   cdsDBChange.Post;
   if cdsDBChangeRepetido.AsBoolean then
   begin
     cdsDBChange.Prior;
     cdsDBChange.Edit;
     cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome);
-    cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
+    // cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
     cdsDBChange.Post;
     cdsDBChange.Next;
   end;
 
   MarcarRepetidos(cdsDBChangeNome.AsString);
+end;
+
+procedure TfrmValidadorDBChange.rgpFiltroAnaliseClick(Sender: TObject);
+begin
+  AplicarFiltroAnalise(TTipoFiltroAnalise(rgpFiltroAnalise.ItemIndex));
 end;
 
 procedure TfrmValidadorDBChange.rgpFiltroClick(Sender: TObject);

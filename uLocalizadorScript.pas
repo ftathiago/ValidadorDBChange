@@ -17,6 +17,7 @@ type
   public
     class function New(const ADataSet: TDataSet): ILocalizadorDeScript;
     constructor Create(const ADataSet: TDataSet);
+    destructor Destroy; override;
     procedure Localizar(const DiretorioInicio: string);
   end;
 
@@ -33,6 +34,13 @@ end;
 constructor TLocalizadorDeScript.Create(const ADataSet: TDataSet);
 begin
   FDataSet := ADataSet;
+  FDataSet.DisableControls;
+end;
+
+destructor TLocalizadorDeScript.Destroy;
+begin
+  FDataSet.EnableControls;
+  inherited;
 end;
 
 procedure TLocalizadorDeScript.Localizar(const DiretorioInicio: string);
