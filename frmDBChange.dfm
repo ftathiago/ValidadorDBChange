@@ -66,7 +66,7 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     Top = 75
     Width = 813
     Height = 433
-    ActivePage = tbsRelacaoScriptArquivo
+    ActivePage = tbsScript
     Align = alClient
     TabOrder = 1
     object tbsScript: TTabSheet
@@ -212,7 +212,11 @@ object frmValidadorDBChange: TfrmValidadorDBChange
   object FileOpenDialog: TFileOpenDialog
     DefaultExtension = '*.xml'
     FavoriteLinks = <>
-    FileTypes = <>
+    FileTypes = <
+      item
+        DisplayName = 'xml'
+        FileMask = '*.xml'
+      end>
     Options = []
     Left = 582
     Top = 44

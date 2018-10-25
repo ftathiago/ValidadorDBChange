@@ -80,6 +80,7 @@ type
     procedure AplicarFiltroAnalise(const AFiltro: TTipoFiltroAnalise);
     procedure DataSetToXML(const AXMLDoc: IXMLDocument);
     procedure AtribuirNomeScriptAoXML(_script: IXMLScriptType);
+    procedure DefinirTemPos(_script: IXMLScriptType);
   public
     { Public declarations }
   end;
@@ -116,7 +117,8 @@ begin
     cdsDBChangeDescricao.AsString := _script.Description;
     cdsDBChangeZDescricao.AsString := _script.Z_description;
     cdsDBChangeNome.AsString := _script.A_name;
-    cdsDBChangeTemPos.AsBoolean := _script.X_has_pos = 'True';
+    if not _script.X_has_pos.Trim.IsEmpty then
+      cdsDBChangeTemPos.AsBoolean := _script.X_has_pos.Trim.ToUpper.Equals('TRUE');
 
     if not _script.Text.Trim.IsEmpty then
     begin
@@ -221,8 +223,7 @@ begin
       if not cdsDBChangeVersao.AsString.Trim.IsEmpty then
         _script.Version := cdsDBChangeVersao.AsString;
 
-      if cdsDBChangeTemPos.AsBoolean then
-        _script.X_has_pos := 'True';
+      DefinirTemPos(_script);
 
       if not cdsDBChangeDescricao.AsString.Trim.IsEmpty then
         _script.Description := cdsDBChangeDescricao.AsString;
@@ -248,6 +249,16 @@ begin
 
   if not cdsDBChangeNome.AsString.Trim.IsEmpty then
     _script.A_name := cdsDBChangeNome.AsString;
+end;
+
+procedure TfrmValidadorDBChange.DefinirTemPos(_script: IXMLScriptType);
+begin
+  if cdsDBChangeTemPos.IsNull then
+    exit;
+
+  _script.X_has_pos := 'False';
+  if cdsDBChangeTemPos.AsBoolean then
+    _script.X_has_pos := 'True';
 end;
 
 procedure TfrmValidadorDBChange.DBGrid1TitleClick(Column: TColumn);
@@ -297,14 +308,14 @@ begin
   cdsDBChange.Edit;
   cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome) or
     cdsDBChangeValue.AsString.Equals(ANome);
-  cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;    
+  cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
   cdsDBChange.Post;
   if cdsDBChangeRepetido.AsBoolean then
   begin
     cdsDBChange.Prior;
     cdsDBChange.Edit;
     cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome);
-    // cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
+    //cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
     cdsDBChange.Post;
     cdsDBChange.Next;
   end;
