@@ -8,9 +8,18 @@ uses
 type
   IAnalisadorScript = interface(IInterface)
     ['{2BA5DC51-9989-4DFC-9AEA-A0074BCFBC8C}']
+    function SetAnalise(const AAnalise: TFDMemTable): IAnalisadorScript;
+    function SetDBChange(const ADBChange: TFDMemTable): IAnalisadorScript;
+    function SetArquivos(const AArquivos: TFDMemTable): IAnalisadorScript;
     procedure Analisar;
   end;
 
+implementation
+
+uses
+  System.SysUtils, Vcl.Dialogs, uLocalizadorScript, Validador.DI;
+
+type
   TAnalisadorScript = class(TInterfacedObject, IAnalisadorScript)
   private
     FAnalise: TFDMemTable;
@@ -22,20 +31,15 @@ type
     FAnaliseNOME_ARQUIVO: TField;
     procedure CarregarScriptsNaAnalise;
     procedure CarregarListaDeArquivo;
-    procedure SetAnalise(const AAnalise: TFDMemTable);
-    procedure SetDBChange(const ADBChange: TFDMemTable);
-    procedure SetArquivos(const AArquivos: TFDMemTable);
     procedure CarregarArquivosNaAnalise;
   public
     constructor Create(const AAnalise, ADBChange, AArquivos: TFDMemTable);
     class function New(const AAnalise, ADBChange, AArquivos: TFDMemTable): IAnalisadorScript;
+    function SetAnalise(const AAnalise: TFDMemTable): IAnalisadorScript;
+    function SetDBChange(const ADBChange: TFDMemTable): IAnalisadorScript;
+    function SetArquivos(const AArquivos: TFDMemTable): IAnalisadorScript;
     procedure Analisar;
   end;
-
-implementation
-
-uses
-  System.SysUtils, Vcl.Dialogs, uLocalizadorScript;
 
 class function TAnalisadorScript.New(const AAnalise, ADBChange, AArquivos: TFDMemTable)
   : IAnalisadorScript;
@@ -50,29 +54,32 @@ begin
   SetArquivos(AArquivos);
 end;
 
-procedure TAnalisadorScript.SetAnalise(const AAnalise: TFDMemTable);
+function TAnalisadorScript.SetAnalise(const AAnalise: TFDMemTable): IAnalisadorScript;
 begin
   if FAnalise = AAnalise then
     exit;
   FAnalise := AAnalise;
   FAnaliseNOME_SCRIPT := FAnalise.FindField('NOME_SCRIPT');
   FAnaliseNOME_ARQUIVO := FAnalise.FindField('NOME_ARQUIVO');
+  result := Self;
 end;
 
-procedure TAnalisadorScript.SetDBChange(const ADBChange: TFDMemTable);
+function TAnalisadorScript.SetDBChange(const ADBChange: TFDMemTable): IAnalisadorScript;
 begin
   if FDBChange = ADBChange then
     exit;
   FDBChange := ADBChange;
   FDBChangeNome := FDBChange.FindField('NOME');
+  result := Self;
 end;
 
-procedure TAnalisadorScript.SetArquivos(const AArquivos: TFDMemTable);
+function TAnalisadorScript.SetArquivos(const AArquivos: TFDMemTable): IAnalisadorScript;
 begin
   if FArquivos = AArquivos then
     exit;
   FArquivos := AArquivos;
   FArquivosNOME_ARQUIVO := FArquivos.FindField('NOME_ARQUIVO');
+  result := Self;
 end;
 
 procedure TAnalisadorScript.Analisar;
@@ -131,5 +138,10 @@ begin
     FArquivos.Next;
   end;
 end;
+
+initialization
+
+ContainerDI.RegisterType<TAnalisadorScript>.Implements<IAnalisadorScript>('IAnalisadorScript');
+ContainerDI.Build;
 
 end.

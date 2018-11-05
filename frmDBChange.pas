@@ -7,12 +7,13 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, dbChange, Vcl.ComCtrls;
+  Vcl.ExtCtrls, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, dbChange, Vcl.ComCtrls, Validador.UI.FormBase,
+  Validador.Data.FDDbChange;
 
 type
   TTipoFiltro = (tfTodos, tfRepetidos, tfImportar);
 
-  TfrmValidadorDBChange = class(TForm)
+  TfrmValidadorDBChange = class(TFormBase)
     pnlAbrirDbChange: TPanel;
     edtFileName: TEdit;
     btnAbrirDbChange: TSpeedButton;
@@ -70,59 +71,46 @@ type
     procedure AbrirDBChange(const AFileName: TFileName);
     procedure MarcarRepetidos(const ANome: string);
     procedure AplicarFiltro(const AFiltro: TTipoFiltro);
-    procedure DataSetToXML(const AXMLDoc: IXMLDocument);
-    procedure AtribuirNomeScriptAoXML(_script: IXMLScriptType);
+    procedure MostrarXMLNoMemo(const AXMLDocument: IXMLDocument);
   public
     { Public declarations }
   end;
-
-var
-  frmValidadorDBChange: TfrmValidadorDBChange;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  System.StrUtils, uLocalizadorScript, uAnalizadorScript;
+  System.StrUtils, uLocalizadorScript, uAnalizadorScript, Validador.DI,
+  Validador.Core.ConversorXMLDataSet;
 
 procedure TfrmValidadorDBChange.AbrirDBChange(const AFileName: TFileName);
 var
-  _havillan: IXMLHavillanType;
-  _script: IXMLScriptType;
   _xmlDoc: IXMLDocument;
-  i: integer;
+  _conversor: IConversorXMLDataSet;
+  _dbChangeDataSet: TFDDbChange;
 begin
   _xmlDoc := TXMLDocument.Create(AFileName);
-  _xmlDoc.Encoding := 'UTF-8';
-  _havillan := _xmlDoc.GetDocBinding('havillan', TXMLHavillanType) as IXMLHavillanType;
-  cdsDBChange.DisableControls;
-  for i := 0 to Pred(_havillan.Count) do
-  begin
-    _script := _havillan.Script[i];
-    if _script.A_name.Trim.IsEmpty and _script.Text.Trim.IsEmpty then
-      Continue;
-    cdsDBChange.Insert;
-    cdsDBChangeOrdemOriginal.AsInteger := i;
-    cdsDBChangeVersao.AsString := _script.Version;
-    cdsDBChangeDescricao.AsString := _script.Description;
-    cdsDBChangeZDescricao.AsString := _script.Z_description;
-    cdsDBChangeNome.AsString := _script.A_name;
-    cdsDBChangeTemPos.AsBoolean := _script.X_has_pos = 'True';
-
-    if not _script.Text.Trim.IsEmpty then
-    begin
-      cdsDBChangeValue.AsString := _script.Text;
-      cdsDBChangeNome.AsString := _script.Text;
-    end;
-    cdsDBChange.Post;
+  _dbChangeDataSet := TFDDbChange.Create(nil);
+  try
+    _dbChangeDataSet.CreateDataSet;
+    _xmlDoc.Encoding := 'UTF-8';
+    _conversor := Validador.DI.ContainerDI.Resolve<IConversorXMLDataSet>;
+    _conversor.SetXML(_xmlDoc);
+    _conversor.SetDataSet(_dbChangeDataSet);
+    _conversor.ConverterParaDataSet;
+  finally
+    cdsDBChange.Close;
+    cdsDBChange.Data := _dbChangeDataSet.Data;
+    _dbChangeDataSet.Close;
+    FreeAndNil(_dbChangeDataSet);
   end;
-  cdsDBChange.EnableControls;
 end;
 
 procedure TfrmValidadorDBChange.AnalisarClick(Sender: TObject);
 begin
-  TAnalisadorScript.New(cdsAnalise, cdsDBChange, cdsArquivos).Analisar;
+  Validador.DI.ContainerDI.Resolve<IAnalisadorScript>.SetAnalise(cdsAnalise)
+    .SetDBChange(cdsDBChange).SetArquivos(cdsArquivos).Analisar;
 end;
 
 procedure TfrmValidadorDBChange.AplicarFiltro(const AFiltro: TTipoFiltro);
@@ -165,58 +153,19 @@ begin
   cdsDBChangeExisteNaPasta.AsBoolean := True;
 end;
 
-procedure TfrmValidadorDBChange.DataSetToXML(const AXMLDoc: IXMLDocument);
+procedure TfrmValidadorDBChange.MostrarXMLNoMemo(const AXMLDocument: IXMLDocument);
 var
-  _havillan: IXMLHavillanType;
-  _script: IXMLScriptType;
-  _tempFiltro: TTipoFiltro;
-  _tempOrdem: string;
+  _stream: TMemoryStream;
 begin
-  _tempFiltro := TTipoFiltro(rgpFiltro.ItemIndex);
-  _tempOrdem := cdsDBChange.IndexFieldNames;
+  _stream := TMemoryStream.Create;
   try
-    AplicarFiltro(tfImportar);
-    cdsDBChange.IndexFieldNames := 'OrdemOriginal';
-
-    _havillan := AXMLDoc.GetDocBinding('havillan', TXMLHavillanType, TargetNamespace)
-      as IXMLHavillanType;
-    cdsDBChange.First;
-    while not cdsDBChange.Eof do
-    begin
-      _script := _havillan.Add;
-
-      AtribuirNomeScriptAoXML(_script);
-
-      if not cdsDBChangeVersao.AsString.Trim.IsEmpty then
-        _script.Version := cdsDBChangeVersao.AsString;
-
-      if cdsDBChangeTemPos.AsBoolean then
-        _script.X_has_pos := 'True';
-
-      if not cdsDBChangeDescricao.AsString.Trim.IsEmpty then
-        _script.Description := cdsDBChangeDescricao.AsString;
-
-      if not cdsDBChangeZDescricao.AsString.Trim.IsEmpty then
-        _script.Z_description := cdsDBChangeZDescricao.AsString;
-
-      if not cdsDBChangeValue.AsString.Trim.IsEmpty then
-        _script.Text := cdsDBChangeValue.AsString;
-
-      cdsDBChange.Next;
-    end;
+    AXMLDocument.SaveToStream(_stream);
+    _stream.position := 0;
+    memXML.Lines.Clear;
+    memXML.Lines.LoadFromStream(_stream);
   finally
-    AplicarFiltro(_tempFiltro);
-    cdsDBChange.IndexFieldNames := _tempOrdem;
+    FreeAndNil(_stream);
   end;
-end;
-
-procedure TfrmValidadorDBChange.AtribuirNomeScriptAoXML(_script: IXMLScriptType);
-begin
-  if not cdsDBChangeValue.IsNull then
-    exit;
-
-  if not cdsDBChangeNome.AsString.Trim.IsEmpty then
-    _script.A_name := cdsDBChangeNome.AsString;
 end;
 
 procedure TfrmValidadorDBChange.DBGrid1TitleClick(Column: TColumn);
@@ -280,26 +229,28 @@ end;
 procedure TfrmValidadorDBChange.SpeedButton2Click(Sender: TObject);
 var
   _xmlDoc: IXMLDocument;
-  _stream: TMemoryStream;
+  _conversor: IConversorXMLDataSet;
+  _dbChangeDS: TFDDbChange;
 begin
-  _xmlDoc := TXMLDocument.Create(nil);
-  _xmlDoc.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix, doNamespaceDecl,
-    doAutoSave];
-
-  DataSetToXML(_xmlDoc);
-
-  _xmlDoc.Version := '1.0';
-  _xmlDoc.Encoding := 'UTF-8';
-  _xmlDoc.StandAlone := 'no';
-
-  _stream := TMemoryStream.Create;
+  _xmlDoc := NewXMLDocument;
+  _dbChangeDS := TFDDbChange.Create(Nil);
+  _conversor := ContainerDI.Resolve<IConversorXMLDataSet>;
   try
-    _xmlDoc.SaveToStream(_stream);
-    _stream.position := 0;
-    memXML.Lines.Clear;
-    memXML.Lines.LoadFromStream(_stream);
+    _dbChangeDS.Data := cdsDBChange.Data;
+    _xmlDoc.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
+      doNamespaceDecl, doAutoSave];
+
+    _conversor.SetXML(_xmlDoc);
+    _conversor.SetDataSet(_dbChangeDS);
+    _conversor.DataSetParaImportacao;
+
+    _xmlDoc.Version := '1.0';
+    _xmlDoc.Encoding := 'UTF-8';
+    _xmlDoc.StandAlone := 'no';
+    MostrarXMLNoMemo(_xmlDoc);
   finally
-    FreeAndNil(_stream);
+    _dbChangeDS.Close;
+    FreeAndNil(_dbChangeDS);
   end;
 end;
 

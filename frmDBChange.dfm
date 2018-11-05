@@ -1,30 +1,23 @@
-object frmValidadorDBChange: TfrmValidadorDBChange
-  Left = 0
-  Top = 0
+inherited frmValidadorDBChange: TfrmValidadorDBChange
   Caption = 'Validador de DBChange'
-  ClientHeight = 508
-  ClientWidth = 813
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
+  ClientHeight = 629
+  ClientWidth = 910
   OnCreate = FormCreate
+  ExplicitWidth = 926
+  ExplicitHeight = 668
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 21
   object pnlAbrirDbChange: TPanel
     Left = 0
     Top = 0
-    Width = 813
+    Width = 910
     Height = 75
     Align = alTop
     Caption = 'Abrir dbChange.xml'
     ShowCaption = False
     TabOrder = 0
     DesignSize = (
-      813
+      910
       75)
     object btnAbrirDbChange: TSpeedButton
       Left = 6
@@ -53,8 +46,8 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     object edtFileName: TEdit
       Left = 96
       Top = 8
-      Width = 703
-      Height = 21
+      Width = 800
+      Height = 29
       Anchors = [akLeft, akTop, akRight]
       Enabled = False
       ReadOnly = True
@@ -64,9 +57,9 @@ object frmValidadorDBChange: TfrmValidadorDBChange
   object PageControl1: TPageControl
     Left = 0
     Top = 75
-    Width = 813
-    Height = 433
-    ActivePage = tbsRelacaoScriptArquivo
+    Width = 910
+    Height = 554
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
     object tbsScript: TTabSheet
@@ -74,30 +67,30 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       object DBGrid1: TDBGrid
         Left = 0
         Top = 55
-        Width = 805
-        Height = 350
+        Width = 902
+        Height = 463
         Align = alClient
         DataSource = dtsDBChange
         TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Charset = ANSI_CHARSET
         TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
+        TitleFont.Height = -16
+        TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
         OnTitleClick = DBGrid1TitleClick
       end
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 805
+        Width = 902
         Height = 55
         Align = alTop
         TabOrder = 1
         object Label1: TLabel
           Left = 316
           Top = 18
-          Width = 87
-          Height = 13
+          Width = 122
+          Height = 21
           Caption = 'Localizar SCRIPT: '
         end
         object rgpFiltro: TRadioGroup
@@ -115,10 +108,10 @@ object frmValidadorDBChange: TfrmValidadorDBChange
           OnClick = rgpFiltroClick
         end
         object edtLocalizarSCRIPT: TEdit
-          Left = 403
+          Left = 444
           Top = 15
-          Width = 121
-          Height = 21
+          Width = 180
+          Height = 29
           TabOrder = 1
           OnChange = edtLocalizarSCRIPTChange
         end
@@ -128,9 +121,9 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       Caption = 'XML (Texto)'
       object memXML: TMemo
         Left = 0
-        Top = 33
-        Width = 805
-        Height = 372
+        Top = 49
+        Width = 902
+        Height = 469
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
@@ -138,23 +131,23 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 805
-        Height = 33
+        Width = 902
+        Height = 49
         Align = alTop
         TabOrder = 1
         object SpeedButton2: TSpeedButton
           Left = 2
           Top = 2
-          Width = 89
-          Height = 22
+          Width = 133
+          Height = 31
           Caption = 'DataSet -> XML'
           OnClick = SpeedButton2Click
         end
         object SpeedButton4: TSpeedButton
-          Left = 92
-          Top = 2
-          Width = 80
-          Height = 22
+          Left = 141
+          Top = 4
+          Width = 109
+          Height = 31
           Caption = 'Salvar XML'
           OnClick = SpeedButton4Click
         end
@@ -166,15 +159,15 @@ object frmValidadorDBChange: TfrmValidadorDBChange
       object DBGrid2: TDBGrid
         Left = 0
         Top = 0
-        Width = 805
-        Height = 405
+        Width = 902
+        Height = 518
         Align = alClient
         DataSource = dtsArquivos
         TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Charset = ANSI_CHARSET
         TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
+        TitleFont.Height = -16
+        TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
       end
     end

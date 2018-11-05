@@ -88,6 +88,7 @@
         <DCC_UNIT_PLATFORM>false</DCC_UNIT_PLATFORM>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_UnitSearchPath>C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton\lib;C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton;C:\Users\ftath\Documents\EmbarcaderoConference2018\spring4d\Source\Core\Container;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -106,10 +107,26 @@
         <DCCReference Include="dbChange.pas"/>
         <DCCReference Include="frmDBChange.pas">
             <Form>frmValidadorDBChange</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="uLocalizadorScript.pas"/>
         <DCCReference Include="uAnalizadorScript.pas"/>
+        <DCCReference Include="Validador.UI.FormBase.pas">
+            <Form>FormBase</Form>
+        </DCCReference>
+        <DCCReference Include="Validador.UI.TelaInicial.pas">
+            <Form>TelaInicial</Form>
+        </DCCReference>
+        <DCCReference Include="Validador.UI.MesclarArquivos.pas">
+            <Form>MesclarArquivos</Form>
+        </DCCReference>
+        <DCCReference Include="Validador.UI.VisualizarXML.pas">
+            <Form>VisualizarXML</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Validador.Core.UnificadorXML.pas"/>
+        <DCCReference Include="Validador.DI.pas"/>
+        <DCCReference Include="Validador.Core.ConversorXMLDataSet.pas"/>
+        <DCCReference Include="Validador.Data.FDdbChange.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
