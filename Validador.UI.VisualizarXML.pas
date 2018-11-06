@@ -19,8 +19,13 @@ type
     actSalvarArquivo: TAction;
     OpenDialog: TOpenDialog;
     SaveDialog: TSaveDialog;
+    actSelecionarTudo: TAction;
+    actCopiarXML: TAction;
+    ToolButton3: TToolButton;
     procedure actAbrirArquivoExecute(Sender: TObject);
     procedure actSalvarArquivoExecute(Sender: TObject);
+    procedure actSelecionarTudoExecute(Sender: TObject);
+    procedure actCopiarXMLExecute(Sender: TObject);
   private
     function GetXML: WideString;
     procedure XMLToMemo(const AXMLDocument: IXMLDocument);
@@ -52,6 +57,12 @@ begin
   memoXML.Lines.LoadFromFile(OpenDialog.FileName);
 end;
 
+procedure TVisualizarXML.actCopiarXMLExecute(Sender: TObject);
+begin
+  actSelecionarTudo.Execute;
+  memoXML.CopyToClipboard;
+end;
+
 procedure TVisualizarXML.actSalvarArquivoExecute(Sender: TObject);
 var
   _xmlDocument: IXMLDocument;
@@ -60,6 +71,11 @@ begin
     Exit;
   _xmlDocument := GetXMLDocument;
   _xmlDocument.SaveToFile(SaveDialog.FileName);
+end;
+
+procedure TVisualizarXML.actSelecionarTudoExecute(Sender: TObject);
+begin
+  memoXML.SelectAll;
 end;
 
 function TVisualizarXML.GetXML: WideString;
@@ -83,12 +99,7 @@ procedure TVisualizarXML.ConfigurarXML(const AXMLDocument: IXMLDocument);
 begin
   AXMLDocument.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
     doNamespaceDecl, doAutoSave];
-  AXMLDocument.ParseOptions := [poPreserveWhiteSpace];
-  AXMLDocument.NodeIndentStr := '++';
   AXMLDocument.Active := True;
-  AXMLDocument.Version := '1.0';
-  AXMLDocument.Encoding := 'UTF-8';
-  AXMLDocument.StandAlone := 'no';
 end;
 
 procedure TVisualizarXML.SetDiretorioBase(const ADiretorioBase: string);
@@ -99,12 +110,17 @@ end;
 
 procedure TVisualizarXML.SetXML(const AXML: TStrings);
 var
-  _xmlDocument: IXMLDocument;
+  _stream: TMemoryStream;
 begin
-  _xmlDocument := NewXMLDocument;
-  _xmlDocument.XML.Text := AXML.Text;
-  ConfigurarXML(_xmlDocument);
-  XMLToMemo(_xmlDocument);
+  _stream := TMemoryStream.Create;
+  try
+    AXML.SaveToStream(_stream);
+    _stream.Position := 0;
+    memoXML.Lines.Clear;
+    memoXML.Lines.LoadFromStream(_stream);
+  finally
+    FreeAndNil(_stream);
+  end;
 end;
 
 procedure TVisualizarXML.XMLToMemo(const AXMLDocument: IXMLDocument);
@@ -118,7 +134,7 @@ begin
   _stream := TMemoryStream.Create;
   try
     AXMLDocument.SaveToStream(_stream);
-    _stream.position := 0;
+    _stream.Position := 0;
     memoXML.Lines.Clear;
     memoXML.Lines.LoadFromStream(_stream);
   finally

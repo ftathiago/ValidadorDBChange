@@ -46,6 +46,11 @@ object VisualizarXML: TVisualizarXML
       Top = 0
       Action = actSalvarArquivo
     end
+    object ToolButton3: TToolButton
+      Left = 214
+      Top = 0
+      Action = actCopiarXML
+    end
   end
   object ActionList: TActionList
     Left = 96
@@ -57,6 +62,16 @@ object VisualizarXML: TVisualizarXML
     object actSalvarArquivo: TAction
       Caption = 'Salvar arquivo'
       OnExecute = actSalvarArquivoExecute
+    end
+    object actSelecionarTudo: TAction
+      Caption = 'Selecionar tudo'
+      ShortCut = 16449
+      OnExecute = actSelecionarTudoExecute
+    end
+    object actCopiarXML: TAction
+      Caption = 'Copiar XML'
+      ShortCut = 16451
+      OnExecute = actCopiarXMLExecute
     end
   end
   object OpenDialog: TOpenDialog

@@ -41,8 +41,7 @@ begin
   FDataSet.DisableControls;
   try
     FDataSet.First;
-    _havillan := FXML.GetDocBinding('havillan', TXMLHavillanType, TargetNamespace)
-      as IXMLHavillanType;
+    _havillan := Gethavillan(FXML);
 
     while not FDataSet.Eof do
     begin

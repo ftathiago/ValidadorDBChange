@@ -18,18 +18,19 @@ inherited MesclarArquivos: TMesclarArquivos
     Caption = 'pnlProximo'
     ShowCaption = False
     TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitTop = 529
     DesignSize = (
       1081
       45)
     object btnProximo: TButton
-      Left = 991
+      Left = 896
       Top = 5
-      Width = 83
+      Width = 178
       Height = 35
+      Action = actMesclarDocumentos
       Anchors = [akTop, akRight]
-      Caption = 'Pr'#243'ximo'
       TabOrder = 0
-      OnClick = btnProximoClick
     end
   end
   object pgcEtapas: TPageControl
@@ -131,7 +132,30 @@ inherited MesclarArquivos: TMesclarArquivos
           ExplicitHeight = 25
         end
         inline VisualizarXML1: TVisualizarXML
+          Left = 1
+          Top = 31
+          Width = 525
+          Height = 486
           Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+          ExplicitLeft = 1
+          ExplicitTop = 31
+          ExplicitWidth = 525
+          ExplicitHeight = 486
+          inherited memoXML: TMemo
+            Width = 525
+            Height = 457
+          end
+          inherited ToolBar1: TToolBar
+            Width = 525
+            ExplicitWidth = 525
+          end
         end
         object Splitter1: TSplitter
           Left = 526
@@ -145,7 +169,30 @@ inherited MesclarArquivos: TMesclarArquivos
           ExplicitHeight = 616
         end
         inline VisualizarXML2: TVisualizarXML
+          Left = 546
+          Top = 31
+          Width = 526
+          Height = 486
           Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          ExplicitLeft = 546
+          ExplicitTop = 31
+          ExplicitWidth = 526
+          ExplicitHeight = 486
+          inherited memoXML: TMemo
+            Width = 526
+            Height = 457
+          end
+          inherited ToolBar1: TToolBar
+            Width = 526
+            ExplicitWidth = 526
+          end
         end
       end
     end
@@ -154,8 +201,41 @@ inherited MesclarArquivos: TMesclarArquivos
       ImageIndex = 1
       TabVisible = False
       inline VisualizarXML3: TVisualizarXML
+        Left = 0
+        Top = 0
+        Width = 1073
+        Height = 518
         Align = alClient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        ExplicitWidth = 1073
+        ExplicitHeight = 518
+        inherited memoXML: TMemo
+          Width = 1073
+          Height = 489
+        end
+        inherited ToolBar1: TToolBar
+          Width = 1073
+          ExplicitWidth = 1073
+        end
       end
+    end
+  end
+  object ActionList: TActionList
+    Left = 856
+    Top = 352
+    object actMesclarDocumentos: TAction
+      Caption = 'Mesclar documentos'
+      OnExecute = actMesclarDocumentosExecute
+    end
+    object actVoltar: TAction
+      Caption = 'Tentar novamente'
+      OnExecute = actVoltarExecute
     end
   end
 end

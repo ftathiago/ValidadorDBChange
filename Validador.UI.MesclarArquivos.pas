@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Validador.UI.FormBase, Vcl.ExtCtrls,
-  Validador.UI.VisualizarXML, Vcl.StdCtrls, Validador.Data.FDdbChange, Xml.XMLIntf, Vcl.ComCtrls;
+  Validador.UI.VisualizarXML, Vcl.StdCtrls, Validador.Data.FDdbChange, Xml.XMLIntf, Vcl.ComCtrls,
+  System.Actions, Vcl.ActnList;
 
 type
   TMesclarArquivos = class(TFormBase)
@@ -21,13 +22,16 @@ type
     tbsArquivos: TTabSheet;
     tbsFinal: TTabSheet;
     VisualizarXML3: TVisualizarXML;
-    procedure btnProximoClick(Sender: TObject);
+    ActionList: TActionList;
+    actMesclarDocumentos: TAction;
+    actVoltar: TAction;
     procedure FormCreate(Sender: TObject);
+    procedure actMesclarDocumentosExecute(Sender: TObject);
+    procedure actVoltarExecute(Sender: TObject);
   private
     procedure UnificarXML(const AXMLUnificado: IXMLDocument; const AdbChangeDS: TFDDbChange);
     procedure ConverterParaDataSet(_xmlUnificado: IXMLDocument; _dbChangeDataSet: TFDDbChange);
-    procedure GerarXMLSemRepetidos(const ADbChangeDataSet: TFDDbChange;
-      const _novoXML: IXMLDocument);
+    procedure GerarXMLSemRepetidos(const ADbChangeDataSet: TFDDbChange);
     procedure MostrarXML(_novoXML: IXMLDocument);
     { Private declarations }
   public
@@ -51,28 +55,15 @@ begin
   pgcEtapas.ActivePageIndex := 0;
 end;
 
-procedure TMesclarArquivos.AfterConstruction;
-begin
-  inherited;
-  VisualizarXML1.SetDiretorioBase(DiretorioBase);
-  VisualizarXML2.SetDiretorioBase(DiretorioBase);
-end;
-
-procedure TMesclarArquivos.btnProximoClick(Sender: TObject);
+procedure TMesclarArquivos.actMesclarDocumentosExecute(Sender: TObject);
 var
   _xmlUnificado: IXMLDocument;
   _dbChangeDataSet: TFDDbChange;
-  _novoXML: IXMLDocument;
 begin
   inherited;
   _dbChangeDataSet := TFDDbChange.Create(nil);
-  _novoXML := NewXMLDocument;
   _xmlUnificado := NewXMLDocument;
   try
-    _novoXML.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
-      doNamespaceDecl, doAutoSave];
-    _novoXML.NodeIndentStr := '  ';
-
     _xmlUnificado.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
       doNamespaceDecl, doAutoSave];
     _xmlUnificado.NodeIndentStr := '  ';
@@ -81,12 +72,27 @@ begin
 
     UnificarXML(_xmlUnificado, _dbChangeDataSet);
     ConverterParaDataSet(_xmlUnificado, _dbChangeDataSet);
-    GerarXMLSemRepetidos(_dbChangeDataSet, _novoXML);
-    MostrarXML(_novoXML);
+    GerarXMLSemRepetidos(_dbChangeDataSet);
+
   finally
     _dbChangeDataSet.Close;
     FreeAndNil(_dbChangeDataSet);
+    btnProximo.Action := actVoltar
   end;
+end;
+
+procedure TMesclarArquivos.actVoltarExecute(Sender: TObject);
+begin
+  inherited;
+  pgcEtapas.ActivePage := tbsArquivos;
+  btnProximo.Action := actMesclarDocumentos;
+end;
+
+procedure TMesclarArquivos.AfterConstruction;
+begin
+  inherited;
+  VisualizarXML1.SetDiretorioBase(DiretorioBase);
+  VisualizarXML2.SetDiretorioBase(DiretorioBase);
 end;
 
 procedure TMesclarArquivos.UnificarXML(const AXMLUnificado: IXMLDocument;
@@ -111,16 +117,26 @@ begin
   _conversor.ConverterParaDataSet;
 end;
 
-procedure TMesclarArquivos.GerarXMLSemRepetidos(const ADbChangeDataSet: TFDDbChange;
-  const _novoXML: IXMLDocument);
+procedure TMesclarArquivos.GerarXMLSemRepetidos(const ADbChangeDataSet: TFDDbChange);
 var
+  _novoXML: IXMLDocument;
   _conversor: IConversorXMLDataSet;
 begin
+  _novoXML := TXMLDocument.Create(nil);
+  _novoXML.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
+    doNamespaceDecl, doAutoSave];
+  _novoXML.Active := True;
   ADbChangeDataSet.MarcarRepetidos;
+
   _conversor := ContainerDI.Resolve<IConversorXMLDataSet>;
   _conversor.SetXML(_novoXML);
   _conversor.SetDataSet(ADbChangeDataSet);
   _conversor.DataSetParaImportacao;
+
+  _novoXML.Version := '1.0';
+  _novoXML.Encoding := 'UTF-8 ';
+  _novoXML.StandAlone := 'no';
+  MostrarXML(_novoXML);
 end;
 
 procedure TMesclarArquivos.MostrarXML(_novoXML: IXMLDocument);

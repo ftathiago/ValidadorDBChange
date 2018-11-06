@@ -108,8 +108,8 @@
         <DCCReference Include="frmDBChange.pas">
             <Form>frmValidadorDBChange</Form>
         </DCCReference>
-        <DCCReference Include="uLocalizadorScript.pas"/>
-        <DCCReference Include="uAnalizadorScript.pas"/>
+        <DCCReference Include="Validador.Core.LocalizadorScript.pas"/>
+        <DCCReference Include="Validador.Core.AnalizadorScript.pas"/>
         <DCCReference Include="Validador.UI.FormBase.pas">
             <Form>FormBase</Form>
         </DCCReference>
