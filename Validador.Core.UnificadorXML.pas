@@ -2,7 +2,8 @@ unit Validador.Core.UnificadorXML;
 
 interface
 
-uses dbChange, Validador.DI, Xml.XMLIntf;
+uses
+  dbChange, Validador.DI, Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
 
 type
   IUnificadorXML = interface(IInterface)

@@ -41,7 +41,8 @@ implementation
 
 {$R *.dfm}
 
-uses Validador.DI, Validador.Core.ConversorXMLDataSet, Validador.Core.UnificadorXML, dbChange,
+uses
+  Validador.DI, Validador.Core.ConversorXMLDataSet, Validador.Core.UnificadorXML, dbChange,
   Xml.XMLDoc, FireDAC.Stan.StorageXML;
 
 procedure TMesclarArquivos.FormCreate(Sender: TObject);

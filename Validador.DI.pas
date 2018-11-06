@@ -21,4 +21,10 @@ begin
   Result := FContainer;
 end;
 
+initialization
+
+finalization
+
+FContainer.Free;
+
 end.

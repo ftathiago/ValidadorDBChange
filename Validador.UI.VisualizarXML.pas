@@ -42,19 +42,14 @@ uses dbChange;
 procedure TVisualizarXML.AfterConstruction;
 begin
   inherited;
-//  memoXML.Lines.DefaultEncoding := TUTF8Encoding.Create;
+  memoXML.Lines.DefaultEncoding := TUTF8Encoding.UTF8;
 end;
 
 procedure TVisualizarXML.actAbrirArquivoExecute(Sender: TObject);
-var
-  _xmlDocument: IXMLDocument;
 begin
   if Not OpenDialog.Execute then
     Exit;
-  _xmlDocument := TXMLDocument.Create(nil);
-  _xmlDocument.LoadFromFile(OpenDialog.FileName);
-  ConfigurarXML(_xmlDocument);
-  XMLToMemo(_xmlDocument);
+  memoXML.Lines.LoadFromFile(OpenDialog.FileName);
 end;
 
 procedure TVisualizarXML.actSalvarArquivoExecute(Sender: TObject);
@@ -86,9 +81,10 @@ end;
 
 procedure TVisualizarXML.ConfigurarXML(const AXMLDocument: IXMLDocument);
 begin
-  // AXMLDocument.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
-  // doNamespaceDecl, doAutoSave];
-  // AXMLDocument.ParseOptions := [poPreserveWhiteSpace];
+  AXMLDocument.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
+    doNamespaceDecl, doAutoSave];
+  AXMLDocument.ParseOptions := [poPreserveWhiteSpace];
+  AXMLDocument.NodeIndentStr := '++';
   AXMLDocument.Active := True;
   AXMLDocument.Version := '1.0';
   AXMLDocument.Encoding := 'UTF-8';
@@ -105,11 +101,10 @@ procedure TVisualizarXML.SetXML(const AXML: TStrings);
 var
   _xmlDocument: IXMLDocument;
 begin
-  _xmlDocument := LoadXMLData(AXML.Text);
+  _xmlDocument := NewXMLDocument;
+  _xmlDocument.XML.Text := AXML.Text;
   ConfigurarXML(_xmlDocument);
-  _xmlDocument.Active := True;
-  memoXML.Clear;
-  memoXML.Lines.AddStrings(_xmlDocument.Xml);
+  XMLToMemo(_xmlDocument);
 end;
 
 procedure TVisualizarXML.XMLToMemo(const AXMLDocument: IXMLDocument);

@@ -3,12 +3,12 @@ unit Validador.Core.ConversorXMLDataSet;
 interface
 
 uses
-  dbChange, XML.XMLIntf, FireDac.Comp.Client, Validador.Data.FDDbChange;
+  dbChange, FireDac.Comp.Client, Validador.Data.FDDbChange, Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
 
 type
   IConversorXMLDataSet = interface(IInterface)
     ['{D0CE5ECC-B265-48FC-ACAF-0CEA59F5975C}']
-    procedure SetXML(const XML: IXMLDocument);
+    procedure SetXML(const Xml: IXMLDocument);
     procedure SetDataSet(const ADataSet: TFDDbChange);
     procedure ConverterParaDataSet;
     procedure ConverterParaXML;
@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  System.SysUtils, DB, System.Classes, XML.XMLDoc, Validador.DI;
+  System.SysUtils, DB, System.Classes, Validador.DI;
 
 type
   TConversorXMLDataSet = class(TInterfacedObject, IConversorXMLDataSet)
@@ -30,7 +30,7 @@ type
     procedure ConverterParaXML;
     procedure DataSetParaImportacao;
     procedure SetDataSet(const ADataSet: TFDDbChange);
-    procedure SetXML(const XML: IXMLDocument);
+    procedure SetXML(const Xml: IXMLDocument);
   end;
 
 procedure TConversorXMLDataSet.ConverterParaXML;
@@ -98,9 +98,9 @@ begin
   FDataSet := ADataSet;
 end;
 
-procedure TConversorXMLDataSet.SetXML(const XML: IXMLDocument);
+procedure TConversorXMLDataSet.SetXML(const Xml: IXMLDocument);
 begin
-  FXML := XML;
+  FXML := Xml;
 end;
 
 procedure TConversorXMLDataSet.ConverterParaDataSet;

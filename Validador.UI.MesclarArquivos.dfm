@@ -131,32 +131,7 @@ inherited MesclarArquivos: TMesclarArquivos
           ExplicitHeight = 25
         end
         inline VisualizarXML1: TVisualizarXML
-          Left = 1
-          Top = 31
-          Width = 525
-          Height = 486
           Align = alClient
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
-          ExplicitLeft = 1
-          ExplicitTop = 31
-          ExplicitWidth = 525
-          ExplicitHeight = 486
-          inherited memoXML: TMemo
-            Width = 525
-            Height = 457
-            ExplicitWidth = 525
-            ExplicitHeight = 457
-          end
-          inherited ToolBar1: TToolBar
-            Width = 525
-            ExplicitWidth = 525
-          end
         end
         object Splitter1: TSplitter
           Left = 526
@@ -170,32 +145,7 @@ inherited MesclarArquivos: TMesclarArquivos
           ExplicitHeight = 616
         end
         inline VisualizarXML2: TVisualizarXML
-          Left = 546
-          Top = 31
-          Width = 526
-          Height = 486
           Align = alClient
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          ExplicitLeft = 546
-          ExplicitTop = 31
-          ExplicitWidth = 526
-          ExplicitHeight = 486
-          inherited memoXML: TMemo
-            Width = 526
-            Height = 457
-            ExplicitWidth = 526
-            ExplicitHeight = 457
-          end
-          inherited ToolBar1: TToolBar
-            Width = 526
-            ExplicitWidth = 526
-          end
         end
       end
     end
@@ -204,30 +154,7 @@ inherited MesclarArquivos: TMesclarArquivos
       ImageIndex = 1
       TabVisible = False
       inline VisualizarXML3: TVisualizarXML
-        Left = 0
-        Top = 0
-        Width = 1073
-        Height = 518
         Align = alClient
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        ExplicitWidth = 1073
-        ExplicitHeight = 518
-        inherited memoXML: TMemo
-          Width = 1073
-          Height = 489
-          ExplicitWidth = 1073
-          ExplicitHeight = 489
-        end
-        inherited ToolBar1: TToolBar
-          Width = 1073
-          ExplicitWidth = 1073
-        end
       end
     end
   end

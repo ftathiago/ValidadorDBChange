@@ -12,7 +12,8 @@ unit dbChange;
 
 interface
 
-uses Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
+uses
+  Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
 
 type
 
