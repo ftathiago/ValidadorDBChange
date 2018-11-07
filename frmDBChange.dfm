@@ -1,110 +1,108 @@
-object frmValidadorDBChange: TfrmValidadorDBChange
-  Left = 0
-  Top = 0
+inherited frmValidadorDBChange: TfrmValidadorDBChange
   Caption = 'Validador de DBChange'
-  ClientHeight = 508
-  ClientWidth = 813
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
+  ClientHeight = 662
+  ClientWidth = 1071
   OnCreate = FormCreate
+  ExplicitWidth = 1087
+  ExplicitHeight = 701
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 21
   object pnlAbrirDbChange: TPanel
     Left = 0
     Top = 0
-    Width = 813
-    Height = 75
+    Width = 1071
+    Height = 89
     Align = alTop
     Caption = 'Abrir dbChange.xml'
     ShowCaption = False
     TabOrder = 0
     DesignSize = (
-      813
-      75)
+      1071
+      89)
     object btnAbrirDbChange: TSpeedButton
       Left = 6
       Top = 7
       Width = 88
-      Height = 22
+      Height = 30
       Caption = 'Abrir'
       OnClick = btnAbrirDbChangeClick
     end
     object SpeedButton1: TSpeedButton
-      Left = 12
-      Top = 38
-      Width = 99
-      Height = 22
+      Left = 6
+      Top = 43
+      Width = 143
+      Height = 30
       Caption = 'Marcar repetidos'
       OnClick = SpeedButton1Click
     end
     object Analisar: TSpeedButton
-      Left = 117
-      Top = 38
-      Width = 99
-      Height = 22
+      Left = 155
+      Top = 43
+      Width = 142
+      Height = 30
       Caption = 'Analisar dados'
       OnClick = AnalisarClick
     end
     object edtFileName: TEdit
       Left = 96
       Top = 8
-      Width = 703
-      Height = 21
+      Width = 961
+      Height = 29
       Anchors = [akLeft, akTop, akRight]
       Enabled = False
       ReadOnly = True
       TabOrder = 0
+      ExplicitWidth = 703
     end
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 75
-    Width = 813
-    Height = 433
-    ActivePage = TabSheet1
+    Top = 89
+    Width = 1071
+    Height = 573
+    ActivePage = tbsScript
     Align = alClient
     TabOrder = 1
+    ExplicitTop = 75
+    ExplicitWidth = 813
+    ExplicitHeight = 433
     object tbsScript: TTabSheet
       Caption = 'Scripts'
+      ExplicitHeight = 551
       object DBGrid1: TDBGrid
         Left = 0
-        Top = 55
-        Width = 805
-        Height = 350
+        Top = 68
+        Width = 1063
+        Height = 469
         Align = alClient
         DataSource = dtsDBChange
         TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Charset = ANSI_CHARSET
         TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
+        TitleFont.Height = -16
+        TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
         OnTitleClick = DBGrid1TitleClick
       end
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 805
-        Height = 55
+        Width = 1063
+        Height = 68
         Align = alTop
         TabOrder = 1
         object Label1: TLabel
           Left = 316
           Top = 18
-          Width = 87
-          Height = 13
+          Width = 122
+          Height = 21
           Caption = 'Localizar SCRIPT: '
         end
         object rgpFiltro: TRadioGroup
-          Left = 2
+          Left = 17
           Top = 4
           Width = 283
-          Height = 44
+          Height = 55
           Caption = ' Filtro '
           Columns = 3
           Items.Strings = (
@@ -115,10 +113,10 @@ object frmValidadorDBChange: TfrmValidadorDBChange
           OnClick = rgpFiltroClick
         end
         object edtLocalizarSCRIPT: TEdit
-          Left = 403
+          Left = 444
           Top = 15
-          Width = 121
-          Height = 21
+          Width = 189
+          Height = 29
           TabOrder = 1
           OnChange = edtLocalizarSCRIPTChange
         end
@@ -126,35 +124,40 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     end
     object TabSheet1: TTabSheet
       Caption = 'XML (Texto)'
+      ExplicitWidth = 805
+      ExplicitHeight = 397
       object memXML: TMemo
         Left = 0
-        Top = 33
-        Width = 805
-        Height = 372
+        Top = 49
+        Width = 1063
+        Height = 488
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitTop = 33
+        ExplicitWidth = 805
+        ExplicitHeight = 364
       end
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 805
-        Height = 33
+        Width = 1063
+        Height = 49
         Align = alTop
         TabOrder = 1
         object SpeedButton2: TSpeedButton
           Left = 2
-          Top = 2
-          Width = 89
-          Height = 22
+          Top = 5
+          Width = 143
+          Height = 30
           Caption = 'DataSet -> XML'
           OnClick = SpeedButton2Click
         end
         object SpeedButton4: TSpeedButton
-          Left = 92
-          Top = 2
-          Width = 80
-          Height = 22
+          Left = 151
+          Top = 5
+          Width = 143
+          Height = 30
           Caption = 'Salvar XML'
           OnClick = SpeedButton4Click
         end
@@ -163,18 +166,19 @@ object frmValidadorDBChange: TfrmValidadorDBChange
     object tbsRelacaoScriptArquivo: TTabSheet
       Caption = 'Rela'#231#227'o Script x Arquivo'
       ImageIndex = 2
+      ExplicitHeight = 551
       object DBGrid2: TDBGrid
         Left = 0
         Top = 0
-        Width = 805
-        Height = 405
+        Width = 1063
+        Height = 537
         Align = alClient
         DataSource = dtsArquivos
         TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Charset = ANSI_CHARSET
         TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
+        TitleFont.Height = -16
+        TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
       end
     end
@@ -182,7 +186,11 @@ object frmValidadorDBChange: TfrmValidadorDBChange
   object FileOpenDialog: TFileOpenDialog
     DefaultExtension = '*.xml'
     FavoriteLinks = <>
-    FileTypes = <>
+    FileTypes = <
+      item
+        DisplayName = 'XML'
+        FileMask = '*.xml'
+      end>
     Options = []
     Left = 582
     Top = 44

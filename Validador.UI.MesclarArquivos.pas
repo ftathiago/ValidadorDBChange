@@ -46,8 +46,8 @@ implementation
 {$R *.dfm}
 
 uses
-  Validador.DI, Validador.Core.ConversorXMLDataSet, Validador.Core.UnificadorXML, dbChange,
-  Xml.XMLDoc, FireDAC.Stan.StorageXML;
+  Validador.DI, Validador.Core.ConversorXMLDataSet, Validador.Core.UnificadorXML,
+  Validador.Data.dbChangeXML, Xml.XMLDoc, FireDAC.Stan.StorageXML;
 
 procedure TMesclarArquivos.FormCreate(Sender: TObject);
 begin
@@ -64,9 +64,6 @@ begin
   _dbChangeDataSet := TFDDbChange.Create(nil);
   _xmlUnificado := NewXMLDocument;
   try
-    _xmlUnificado.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
-      doNamespaceDecl, doAutoSave];
-    _xmlUnificado.NodeIndentStr := '  ';
 
     _dbChangeDataSet.CreateDataSet;
 
@@ -100,10 +97,15 @@ procedure TMesclarArquivos.UnificarXML(const AXMLUnificado: IXMLDocument;
 var
   _unificador: IUnificadorXML;
 begin
+  AXMLUnificado.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
+    doNamespaceDecl, doAutoSave];
   _unificador := Validador.DI.ContainerDI.Resolve<IUnificadorXML>;
   _unificador.SetXMLAnterior(VisualizarXML2.GetXMLDocument);
   _unificador.SetXMLNovo(VisualizarXML1.GetXMLDocument);
   _unificador.PegarXMLMesclado(AXMLUnificado);
+  AXMLUnificado.Version := '1.0';
+  AXMLUnificado.Encoding := 'UTF-8';
+  AXMLUnificado.StandAlone := 'no';
 end;
 
 procedure TMesclarArquivos.ConverterParaDataSet(_xmlUnificado: IXMLDocument;
@@ -125,7 +127,7 @@ begin
   _novoXML := TXMLDocument.Create(nil);
   _novoXML.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
     doNamespaceDecl, doAutoSave];
-  _novoXML.Active := True;
+  // _novoXML.Active := True;
   ADbChangeDataSet.MarcarRepetidos;
 
   _conversor := ContainerDI.Resolve<IConversorXMLDataSet>;
@@ -134,15 +136,29 @@ begin
   _conversor.DataSetParaImportacao;
 
   _novoXML.Version := '1.0';
-  _novoXML.Encoding := 'UTF-8 ';
+  _novoXML.Encoding := 'UTF-8';
   _novoXML.StandAlone := 'no';
   MostrarXML(_novoXML);
 end;
 
 procedure TMesclarArquivos.MostrarXML(_novoXML: IXMLDocument);
+var
+  _stringList: TStrings;
+  _stream: TMemoryStream;
 begin
-  VisualizarXML3.SetXML(_novoXML.Xml);
-  pgcEtapas.ActivePage := tbsFinal;
+  // Infelizmente, o TXMLDocument APENAS ACRESCENTA O UTF-8 se for salvo em stream
+  _stringList := TStringList.Create;
+  _stream := TMemoryStream.Create;
+  try
+    _novoXML.SaveToStream(_stream);
+    _stream.Position := 0;
+    _stringList.LoadFromStream(_stream);
+    VisualizarXML3.SetXML(_stringList);
+    pgcEtapas.ActivePage := tbsFinal;
+  finally
+    FreeAndNil(_stringList);
+    FreeAndNil(_stream);
+  end;
 end;
 
 end.

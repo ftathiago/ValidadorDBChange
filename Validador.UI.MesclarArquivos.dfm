@@ -18,8 +18,6 @@ inherited MesclarArquivos: TMesclarArquivos
     Caption = 'pnlProximo'
     ShowCaption = False
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 529
     DesignSize = (
       1081
       45)
@@ -151,6 +149,8 @@ inherited MesclarArquivos: TMesclarArquivos
           inherited memoXML: TMemo
             Width = 525
             Height = 457
+            ExplicitWidth = 525
+            ExplicitHeight = 457
           end
           inherited ToolBar1: TToolBar
             Width = 525
@@ -188,6 +188,8 @@ inherited MesclarArquivos: TMesclarArquivos
           inherited memoXML: TMemo
             Width = 526
             Height = 457
+            ExplicitWidth = 526
+            ExplicitHeight = 457
           end
           inherited ToolBar1: TToolBar
             Width = 526
@@ -218,6 +220,8 @@ inherited MesclarArquivos: TMesclarArquivos
         inherited memoXML: TMemo
           Width = 1073
           Height = 489
+          ExplicitWidth = 1073
+          ExplicitHeight = 489
         end
         inherited ToolBar1: TToolBar
           Width = 1073

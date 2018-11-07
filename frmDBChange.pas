@@ -7,12 +7,13 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, dbChange, Vcl.ComCtrls;
+  Vcl.ExtCtrls, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, Validador.Data.dbChangeXML,
+  Validador.UI.FormBase, Vcl.ComCtrls;
 
 type
   TTipoFiltro = (tfTodos, tfRepetidos, tfImportar);
 
-  TfrmValidadorDBChange = class(TForm)
+  TfrmValidadorDBChange = class(TFormBase)
     pnlAbrirDbChange: TPanel;
     edtFileName: TEdit;
     btnAbrirDbChange: TSpeedButton;
@@ -153,7 +154,7 @@ begin
   cdsDBChange.EmptyDataSet;
   FNomeArquivoXML := FileOpenDialog.FileName;
   edtFileName.Text := FNomeArquivoXML;
-  memXML.Lines.DefaultEncoding := TUTF8Encoding.Create;
+  memXML.Lines.DefaultEncoding := TUTF8Encoding.UTF8;
   memXML.Lines.LoadFromFile(FNomeArquivoXML);
   AbrirDBChange(FNomeArquivoXML);
 end;
@@ -237,6 +238,7 @@ procedure TfrmValidadorDBChange.FormCreate(Sender: TObject);
 begin
   cdsDBChange.CreateDataSet;
   cdsArquivos.CreateDataSet;
+  PageControl1.ActivePageIndex := 0;
 end;
 
 procedure TfrmValidadorDBChange.MarcarRepetidos(const ANome: string);
@@ -249,13 +251,13 @@ begin
   cdsDBChange.Edit;
   cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome) or
     cdsDBChangeValue.AsString.Equals(ANome);
+  cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
   cdsDBChange.Post;
   if cdsDBChangeRepetido.AsBoolean then
   begin
     cdsDBChange.Prior;
     cdsDBChange.Edit;
     cdsDBChangeRepetido.AsBoolean := cdsDBChangeNome.AsString.Equals(ANome);
-    cdsDBChangeImportar.AsBoolean := not cdsDBChangeRepetido.AsBoolean;
     cdsDBChange.Post;
     cdsDBChange.Next;
   end;

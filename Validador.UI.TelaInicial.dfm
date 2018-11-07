@@ -1,7 +1,9 @@
 inherited TelaInicial: TTelaInicial
+  BorderStyle = bsSizeToolWin
   Caption = 'Validador dbChange'
   ClientHeight = 463
   ClientWidth = 686
+  Position = poDesktopCenter
   ExplicitWidth = 702
   ExplicitHeight = 502
   PixelsPerInch = 96

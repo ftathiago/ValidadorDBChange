@@ -3,7 +3,8 @@ unit Validador.Core.ConversorXMLDataSet;
 interface
 
 uses
-  dbChange, FireDac.Comp.Client, Validador.Data.FDDbChange, Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
+  Validador.Data.dbChangeXML, FireDac.Comp.Client, Validador.Data.FDDbChange, Xml.xmldom,
+  Xml.XMLDoc, Xml.XMLIntf;
 
 type
   IConversorXMLDataSet = interface(IInterface)
@@ -26,11 +27,11 @@ type
     FXML: IXMLDocument;
     FDataSet: TFDDbChange;
   public
+    procedure SetXML(const AXML: IXMLDocument);
+    procedure SetDataSet(const ADataSet: TFDDbChange);
     procedure ConverterParaDataSet;
     procedure ConverterParaXML;
     procedure DataSetParaImportacao;
-    procedure SetDataSet(const ADataSet: TFDDbChange);
-    procedure SetXML(const Xml: IXMLDocument);
   end;
 
 procedure TConversorXMLDataSet.ConverterParaXML;
@@ -47,7 +48,8 @@ begin
     begin
       _script := _havillan.Add;
 
-      dbChange.AtribuirNome(_script, FDataSet.Value.AsString, FDataSet.Nome.AsString);
+      Validador.Data.dbChangeXML.AtribuirNome(_script, FDataSet.Value.AsString,
+        FDataSet.Nome.AsString);
 
       if not FDataSet.Versao.AsString.Trim.IsEmpty then
         _script.Version := FDataSet.Versao.AsString;
@@ -97,9 +99,9 @@ begin
   FDataSet := ADataSet;
 end;
 
-procedure TConversorXMLDataSet.SetXML(const Xml: IXMLDocument);
+procedure TConversorXMLDataSet.SetXML(const AXML: IXMLDocument);
 begin
-  FXML := Xml;
+  FXML := AXML;
 end;
 
 procedure TConversorXMLDataSet.ConverterParaDataSet;
@@ -108,7 +110,7 @@ var
   _script: IXMLScriptType;
   i: integer;
 begin
-  _havillan := GetHavillan(FXML);
+  _havillan := Gethavillan(FXML);
   FDataSet.DisableControls;
   try
     for i := 0 to Pred(_havillan.Count) do

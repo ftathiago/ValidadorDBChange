@@ -3,7 +3,7 @@ unit Validador.Core.UnificadorXML;
 interface
 
 uses
-  dbChange, Validador.DI, Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
+  Validador.Data.dbChangeXML, Validador.DI, Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
 
 type
   IUnificadorXML = interface(IInterface)
@@ -91,7 +91,7 @@ end;
 
 procedure TUnificadorXML.CopiarScript(_xmlNovoScript, _xmlScript: IXMLScriptType);
 begin
-  dbChange.AtribuirNome(_xmlNovoScript, _xmlScript.Text, _xmlScript.A_name);
+  Validador.Data.dbChangeXML.AtribuirNome(_xmlNovoScript, _xmlScript.Text, _xmlScript.A_name);
   if not _xmlScript.Version.Trim.IsEmpty then
     _xmlNovoScript.Version := _xmlScript.Version;
   if _xmlScript.X_has_pos.Trim.IsEmpty then

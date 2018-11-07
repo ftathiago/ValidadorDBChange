@@ -28,7 +28,6 @@ type
     procedure actCopiarXMLExecute(Sender: TObject);
   private
     function GetXML: WideString;
-    procedure XMLToMemo(const AXMLDocument: IXMLDocument);
     procedure ConfigurarXML(const AXMLDocument: IXMLDocument);
   public
     procedure AfterConstruction; override;
@@ -42,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-uses dbChange;
+uses Validador.Data.dbChangeXML;
 
 procedure TVisualizarXML.AfterConstruction;
 begin
@@ -115,25 +114,6 @@ begin
   _stream := TMemoryStream.Create;
   try
     AXML.SaveToStream(_stream);
-    _stream.Position := 0;
-    memoXML.Lines.Clear;
-    memoXML.Lines.LoadFromStream(_stream);
-  finally
-    FreeAndNil(_stream);
-  end;
-end;
-
-procedure TVisualizarXML.XMLToMemo(const AXMLDocument: IXMLDocument);
-var
-  _stream: TMemoryStream;
-begin
-  AXMLDocument.Version := '1.0';
-  AXMLDocument.Encoding := 'UTF-8';
-  AXMLDocument.StandAlone := 'no';
-
-  _stream := TMemoryStream.Create;
-  try
-    AXMLDocument.SaveToStream(_stream);
     _stream.Position := 0;
     memoXML.Lines.Clear;
     memoXML.Lines.LoadFromStream(_stream);
