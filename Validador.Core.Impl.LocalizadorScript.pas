@@ -1,37 +1,25 @@
-unit uLocalizadorScript;
+unit Validador.Core.Impl.LocalizadorScript;
 
 interface
 
+implementation
+
 uses
-  Data.DB;
+  System.IOUtils, System.Classes, System.SysUtils, System.Types, System.Threading, Data.DB,
+  Validador.DI, Validador.Core.LocalizadorScript;
 
 type
-  ILocalizadorDeScript = Interface(IInterface)
-    procedure Localizar(const DiretorioInicio: string);
-  end;
-
   TLocalizadorDeScript = class(TInterfacedObject, ILocalizadorDeScript)
   private
     FDataSet: TDataSet;
     procedure AdicionarArquivosDoDiretorio(const DiretorioInicio: string);
   public
-    class function New(const ADataSet: TDataSet): ILocalizadorDeScript;
-    constructor Create(const ADataSet: TDataSet);
+    function SetDataSet(const ADataSet: TDataSet): ILocalizadorDeScript;
     destructor Destroy; override;
     procedure Localizar(const DiretorioInicio: string);
   end;
 
-implementation
-
-uses
-  System.IOUtils, System.Classes, System.SysUtils, System.Types, System.Threading;
-
-class function TLocalizadorDeScript.New(const ADataSet: TDataSet): ILocalizadorDeScript;
-begin
-  result := Create(ADataSet);
-end;
-
-constructor TLocalizadorDeScript.Create(const ADataSet: TDataSet);
+function TLocalizadorDeScript.SetDataSet(const ADataSet: TDataSet): ILocalizadorDeScript;
 begin
   FDataSet := ADataSet;
   FDataSet.DisableControls;
@@ -40,7 +28,6 @@ end;
 destructor TLocalizadorDeScript.Destroy;
 begin
   FDataSet.EnableControls;
-  inherited;
 end;
 
 procedure TLocalizadorDeScript.Localizar(const DiretorioInicio: string);
@@ -51,9 +38,7 @@ begin
   _diretorios := TDirectory.GetDirectories(DiretorioInicio);
 
   for AIndex := Low(_diretorios) to High(_diretorios) do
-  begin
-    TLocalizadorDeScript.New(FDataSet).Localizar(_diretorios[AIndex]);
-  end;
+    ContainerDI.Resolve<ILocalizadorDeScript>.SetDataSet(FDataSet).Localizar(_diretorios[AIndex]);
 
   AdicionarArquivosDoDiretorio(DiretorioInicio);
 end;
@@ -73,5 +58,10 @@ begin
     FDataSet.Post;
   end;
 end;
+
+initialization
+
+ContainerDI.RegisterType<TLocalizadorDeScript>.Implements<ILocalizadorDeScript>;
+ContainerDI.Build;
 
 end.

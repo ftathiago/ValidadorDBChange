@@ -59,6 +59,7 @@
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <SanitizedProjectName>ValidadorDBChange</SanitizedProjectName>
+        <Custom_Styles>&quot;Metropolis UI Dark|VCLSTYLE|$(BDSCOMMONDIR)\Styles\MetropolisUIDark.vsf&quot;;&quot;Windows10 Blue|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10Blue.vsf&quot;;&quot;Windows10 Dark|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10Dark.vsf&quot;;&quot;Windows10 SlateGray|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10SlateGray.vsf&quot;</Custom_Styles>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;DBXDb2Driver;addictdb;dxExRw;smdCompletoDT;vclactnband;tb2k;vclFireDAC;RaveVCL;spFundamentals;FireDACADSDriver;SAXKWR;EQGrid;OXml_R;VarianWorkshop;FireDACMSSQLDriver;sppCompleto;PKIPDFBBox;vcldb;dxsb;PGPMIMEBBox;SFTPBBoxSrv;spOrpheus;spVCL;spCommonAPI;pg5Completo;PGPBBox;rbRTL1617;sgcCompleto;ASiCBBox;FireDACDBXDriver;dxExEL;vclx;spConsultas;DAVBBoxCli;cgoCompletoDT;ZIPBBox;EDIBBox;scmCompleto;VCLRESTComponents;rbTCUI1617;RvCore;pg5cPrettyLabel;Box;tbxrt;vclie;bindengine;addict;FireDACMySQLDriver;dxcomn;spVclPkg;SAMLBBoxSrv;smdCompleto;DataSnapClient;spAddict;DBXSybaseASEDriver;IndyIPServer;prcImpl;PngComponents;IndySystem;spTablet;XMLBBox;spVCL_DT;dsnapcon;VirtualTreesR;DBPlannerPkg;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;RvStandard;RvBarcode;spDados;spGravador;Jcl;spDxInspector;emshosting;pg5cCompleto;RvReport;DsgnBBox;dxBarDBNavR;spCompletoDadosConsultas_DT;ccpCompleto;sasCompleto;spEmbeddedWB;DBXOdbcDriver;FireDACTDataDriver;FMXTee;DreamControls;DbxCommonDriver;intCompleto;DataSnapNativeClient;xmlrtl;fmxobj;spCompletoNew_DT;rtl;DbxClientDriver;DBXSybaseASADriver;dxDBEd;spCentralNotificacoes;spdxExpressBar;IndyIPClient;WPTAddict_DT;dxdbtr;vcldbx;TeeUI;dxELib;dxGrEd;HtmlLabelPkg;VclSmp;FireDACODBCDriver;spPatternsAPI;spVCLStylesEditor;DataSnapIndy10ServerTransport;BaseBBox;edtCompleto;DataSnapProviderClient;MailBBox;FireDACMongoDBDriver;spActiveDirectory;SFTPBBoxCli;PacotespPrinter;spCompleto_DT;TVidGrab;DataSnapServerMidas;spGenesis;DBXInterBaseDriver;RvGraphics;PKIECtrl;SAMLBBox;rbIDE1617;TMSLabelsButtonsPkg;DAVBBoxSrv;dxBarExtDBItemsR;DBXMSSQLDriver;spQuickPDF;spUIDControlsDT;DatasnapConnectorsFreePascal;spViewPDF;rbBDE1617;SSHBBoxCli;DBXOracleDriver;spCommonStructures;inetdb;spVCLStyles;FmxTeeUI;emsedge;PDFBBox;fmx;fmxdae;SSHBBoxSrv;EQDBTL;spPatternsImpl;CloudBBox;spHTTP;wflCompleto;sajCompleto;PGPTLSBBox;digCompleto;dbexpress;IndyCore;smdPrettyListView;OfficeBBox;dsnap;DataSnapCommon;sggCompleto;bdertl;DataSnapConnectors;XDevice;SqlDir;EQTL;sarCompleto;rbRCL1617;SAXMSR;FTPSBBoxCli;EmbeddedWebBrowser;FireDACOracleDriver;DBXMySQLDriver;XFormat;ECQDBC;BurnCSP;DBXFirebirdDriver;Json_RT;SOAPBBoxCli;FireDACCommonODBC;MIMEBBox;spZip;cgoCompleto;spImageEn;IndyIPCommon;ppWPToolsPack;vcl;XMLBBoxSec;FTPSBBoxSrv;FireDACDb2Driver;PBFolderDialog;spUtils;XLSSuit;PKIBBox;HTTPBBoxCli;aipCompleto;TeeDB;PKISSHBBox;dxForumLib;VCLZipDT;FireDACPgDriver;proCompleto;FireDACASADriver;spLDAP;dxObjIns;WPTools;spCompletoBase;Tee;DataSnapServer;vclwinx;FireDACDSDriver;dxIns;RvEngine;CustomIPTransport;vcldsnap;spCompletoNew;spDxInspector_DT;SMIMECAdESBBox;dxBarExtItemsR;DBXInformixDriver;SSLBBoxCli;dxBarR;SSLBBoxSrv;HTTPBBoxSrv;SMIMEBBox;aclCompleto;dbxcds;SAXR;PGPSSHBBox;pg5cPrettyListView;spSecureBlackBox;dxEdtr;ggpCompleto;rbTDBC1617;spCommonFunctions;dsnapxml;rbTC1617;dbrtl;inetdbxpress;IndyProtocols;LDAPBBox;spDUnit;SynEditR;spLockBox;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
@@ -68,6 +69,12 @@
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <DCC_UnitSearchPath>C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <Icon_MainIcon>ValidadorDBChange_Icon1.ico</Icon_MainIcon>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppEnableHighDPI>true</AppEnableHighDPI>
+        <UWP_DelphiLogo44>Other-xml-ic44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>Other-xml-icon.png</UWP_DelphiLogo150>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;DBXDb2Driver;vclactnband;vclFireDAC;FireDACADSDriver;FireDACMSSQLDriver;PKIPDFBBox;vcldb;PGPMIMEBBox;SFTPBBoxSrv;PGPBBox;ASiCBBox;FireDACDBXDriver;vclx;DAVBBoxCli;ZIPBBox;EDIBBox;VCLRESTComponents;vclie;bindengine;FireDACMySQLDriver;SAMLBBoxSrv;DataSnapClient;DBXSybaseASEDriver;IndyIPServer;IndySystem;XMLBBox;dsnapcon;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;emshosting;DsgnBBox;DBXOdbcDriver;FireDACTDataDriver;FMXTee;DbxCommonDriver;DataSnapNativeClient;xmlrtl;fmxobj;rtl;DbxClientDriver;DBXSybaseASADriver;IndyIPClient;TeeUI;VclSmp;FireDACODBCDriver;DataSnapIndy10ServerTransport;BaseBBox;DataSnapProviderClient;MailBBox;FireDACMongoDBDriver;SFTPBBoxCli;DataSnapServerMidas;DBXInterBaseDriver;SAMLBBox;DAVBBoxSrv;DBXMSSQLDriver;DatasnapConnectorsFreePascal;SSHBBoxCli;DBXOracleDriver;inetdb;FmxTeeUI;emsedge;PDFBBox;fmx;fmxdae;SSHBBoxSrv;CloudBBox;PGPTLSBBox;dbexpress;IndyCore;OfficeBBox;dsnap;DataSnapCommon;DataSnapConnectors;FTPSBBoxCli;FireDACOracleDriver;DBXMySQLDriver;DBXFirebirdDriver;SOAPBBoxCli;FireDACCommonODBC;MIMEBBox;IndyIPCommon;vcl;XMLBBoxSec;FTPSBBoxSrv;FireDACDb2Driver;PKIBBox;HTTPBBoxCli;TeeDB;PKISSHBBox;FireDACPgDriver;FireDACASADriver;Tee;DataSnapServer;vclwinx;FireDACDSDriver;CustomIPTransport;vcldsnap;SMIMECAdESBBox;DBXInformixDriver;SSLBBoxCli;SSLBBoxSrv;HTTPBBoxSrv;SMIMEBBox;dbxcds;PGPSSHBBox;dsnapxml;dbrtl;inetdbxpress;IndyProtocols;LDAPBBox;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
@@ -88,28 +95,55 @@
         <DCC_UNIT_PLATFORM>false</DCC_UNIT_PLATFORM>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_UnitSearchPath>C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton\lib;C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton;C:\Users\ftath\Documents\EmbarcaderoConference2018\spring4d\Source\Core\Container;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <Icon_MainIcon>ValidadorDBChange_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_Warnings>false</DCC_Warnings>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
+        <DCC_UnitSearchPath>C:\Users\ftath\Documents\EmbarcaderoConference2018\spring4d\Source\Core\Container;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Icon_MainIcon>ValidadorDBChange_Icon1.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="dbChange.pas"/>
-        <DCCReference Include="frmDBChange.pas">
+        <DCCReference Include="Validador.Data.dbChangeXML.pas"/>
+        <DCCReference Include="Validador.UI.frmDBChange.pas">
             <Form>frmValidadorDBChange</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="uLocalizadorScript.pas"/>
-        <DCCReference Include="uAnalizadorScript.pas"/>
+        <DCCReference Include="Validador.Core.LocalizadorScript.pas"/>
+        <DCCReference Include="Validador.Core.AnalisadorScript.pas"/>
+        <DCCReference Include="Validador.UI.FormBase.pas">
+            <Form>FormBase</Form>
+        </DCCReference>
+        <DCCReference Include="Validador.UI.TelaInicial.pas">
+            <Form>TelaInicial</Form>
+        </DCCReference>
+        <DCCReference Include="Validador.UI.MesclarArquivos.pas">
+            <Form>MesclarArquivos</Form>
+        </DCCReference>
+        <DCCReference Include="Validador.UI.VisualizarXML.pas">
+            <Form>VisualizarXML</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Validador.Core.UnificadorXML.pas"/>
+        <DCCReference Include="Validador.DI.pas"/>
+        <DCCReference Include="Validador.Core.ConversorXMLDataSet.pas"/>
+        <DCCReference Include="Validador.Data.FDdbChange.pas"/>
+        <DCCReference Include="Validador.Core.Impl.LocalizadorScript.pas"/>
+        <DCCReference Include="Validador.Core.Impl.ConversorXMLDataSet.pas"/>
+        <DCCReference Include="Validador.Core.Impl.AnalisadorScript.pas"/>
+        <DCCReference Include="Validador.Core.Impl.UnificadorXML.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -136,7 +170,20 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="Other-xml-ic44.png" Configuration="Release" Class="UWP_DelphiLogo44">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\ValidadorDBChange.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>ValidadorDBChange.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\ValidadorDBChange.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ValidadorDBChange.exe</RemoteName>
                         <Overwrite>true</Overwrite>

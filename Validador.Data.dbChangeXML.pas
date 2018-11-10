@@ -1,28 +1,28 @@
+{ ***************************************************** }
+{ }
+{ XML Data Binding }
+{ }
+{ Generated on: 22/08/2018 14:27:56 }
+{ Generated from: Q:\dbscript\PG\dbChange.xml }
+{ Settings stored in: Q:\dbscript\PG\dbChange.xdb }
+{ }
+{ ***************************************************** }
 
-{*****************************************************}
-{                                                     }
-{                  XML Data Binding                   }
-{                                                     }
-{         Generated on: 22/08/2018 14:27:56           }
-{       Generated from: Q:\dbscript\PG\dbChange.xml   }
-{   Settings stored in: Q:\dbscript\PG\dbChange.xdb   }
-{                                                     }
-{*****************************************************}
-
-unit dbChange;
+unit Validador.Data.dbChangeXML;
 
 interface
 
-uses Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
+uses
+  Xml.xmldom, Xml.XMLDoc, Xml.XMLIntf;
 
 type
 
-{ Forward Decls }
+  { Forward Decls }
 
   IXMLHavillanType = interface;
   IXMLScriptType = interface;
 
-{ IXMLHavillanType }
+  { IXMLHavillanType }
 
   IXMLHavillanType = interface(IXMLNodeCollection)
     ['{33100F16-3FD3-4EAD-AE85-8AC002FC2122}']
@@ -34,7 +34,7 @@ type
     property Script[Index: Integer]: IXMLScriptType read Get_Script; default;
   end;
 
-{ IXMLScriptType }
+  { IXMLScriptType }
 
   IXMLScriptType = interface(IXMLNode)
     ['{6C569648-F9BA-409D-ACDB-A329F0269F09}']
@@ -57,12 +57,12 @@ type
     property X_has_pos: UnicodeString read Get_X_has_pos write Set_X_has_pos;
   end;
 
-{ Forward Decls }
+  { Forward Decls }
 
   TXMLHavillanType = class;
   TXMLScriptType = class;
 
-{ TXMLHavillanType }
+  { TXMLHavillanType }
 
   TXMLHavillanType = class(TXMLNodeCollection, IXMLHavillanType)
   protected
@@ -74,7 +74,7 @@ type
     procedure AfterConstruction; override;
   end;
 
-{ TXMLScriptType }
+  { TXMLScriptType }
 
   TXMLScriptType = class(TXMLNode, IXMLScriptType)
   protected
@@ -91,18 +91,20 @@ type
     procedure Set_X_has_pos(Value: UnicodeString);
   end;
 
-{ Global Functions }
+  { Global Functions }
 
 function Gethavillan(Doc: IXMLDocument): IXMLHavillanType;
 function Loadhavillan(const FileName: string): IXMLHavillanType;
 function Newhavillan: IXMLHavillanType;
+procedure AtribuirNome(const AXMLScriptType: IXMLScriptType; const AValue, ANome: string);
 
 const
   TargetNamespace = '';
 
 implementation
 
-uses Xml.xmlutil;
+uses
+  System.SysUtils, Xml.xmlutil;
 
 { Global Functions }
 
@@ -113,12 +115,22 @@ end;
 
 function Loadhavillan(const FileName: string): IXMLHavillanType;
 begin
-  Result := LoadXMLDocument(FileName).GetDocBinding('havillan', TXMLHavillanType, TargetNamespace) as IXMLHavillanType;
+  Result := LoadXMLDocument(FileName).GetDocBinding('havillan', TXMLHavillanType, TargetNamespace)
+    as IXMLHavillanType;
 end;
 
 function Newhavillan: IXMLHavillanType;
 begin
-  Result := NewXMLDocument.GetDocBinding('havillan', TXMLHavillanType, TargetNamespace) as IXMLHavillanType;
+  Result := NewXMLDocument.GetDocBinding('havillan', TXMLHavillanType, TargetNamespace)
+    as IXMLHavillanType;
+end;
+
+procedure AtribuirNome(const AXMLScriptType: IXMLScriptType; const AValue, ANome: string);
+begin
+  if Not AValue.Trim.IsEmpty then
+    Exit;
+  if not ANome.Trim.IsEmpty then
+    AXMLScriptType.A_name := ANome;
 end;
 
 { TXMLHavillanType }
