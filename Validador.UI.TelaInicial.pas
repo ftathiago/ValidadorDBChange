@@ -29,7 +29,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Validador.UI.MesclarArquivos, frmDBChange;
+  Validador.UI.MesclarArquivos, Validador.UI.frmDBChange;
 
 procedure TTelaInicial.CardButton1Click(Sender: TObject);
 var

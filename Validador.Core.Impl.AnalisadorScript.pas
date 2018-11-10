@@ -1,23 +1,12 @@
-unit Validador.Core.AnalizadorScript;
+unit Validador.Core.Impl.AnalisadorScript;
 
 interface
-
-uses
-  Data.DB, FireDAC.Comp.Client;
-
-type
-  IAnalisadorScript = interface(IInterface)
-    ['{2BA5DC51-9989-4DFC-9AEA-A0074BCFBC8C}']
-    function SetAnalise(const AAnalise: TFDMemTable): IAnalisadorScript;
-    function SetDBChange(const ADBChange: TFDMemTable): IAnalisadorScript;
-    function SetArquivos(const AArquivos: TFDMemTable): IAnalisadorScript;
-    procedure Analisar;
-  end;
 
 implementation
 
 uses
-  System.SysUtils, Vcl.Dialogs, uLocalizadorScript, Validador.DI;
+  System.SysUtils, Data.DB, Vcl.Dialogs, FireDAC.Comp.Client, Validador.DI,
+  Validador.Core.LocalizadorScript, Validador.Core.AnalisadorScript;
 
 type
   TAnalisadorScript = class(TInterfacedObject, IAnalisadorScript)
@@ -29,6 +18,7 @@ type
     FDBChangeNome: TField;
     FArquivosNOME_ARQUIVO: TField;
     FAnaliseNOME_ARQUIVO: TField;
+    FDiretorioPadrao: TFileName;
     procedure CarregarScriptsNaAnalise;
     procedure CarregarListaDeArquivo;
     procedure CarregarArquivosNaAnalise;
@@ -38,6 +28,7 @@ type
     function SetAnalise(const AAnalise: TFDMemTable): IAnalisadorScript;
     function SetDBChange(const ADBChange: TFDMemTable): IAnalisadorScript;
     function SetArquivos(const AArquivos: TFDMemTable): IAnalisadorScript;
+    function SetDiretorioPadrao(const ADiretorioPadrao: TFileName): IAnalisadorScript;
     procedure Analisar;
   end;
 
@@ -70,6 +61,12 @@ begin
     exit;
   FDBChange := ADBChange;
   FDBChangeNome := FDBChange.FindField('NOME');
+  result := Self;
+end;
+
+function TAnalisadorScript.SetDiretorioPadrao(const ADiretorioPadrao: TFileName): IAnalisadorScript;
+begin
+  FDiretorioPadrao := ADiretorioPadrao;
   result := Self;
 end;
 
@@ -115,10 +112,10 @@ begin
       Title := 'Escolha o diretório raíz do dbChange';
       Options := [fdoPickFolders, fdoPathMustExist, fdoForceFileSystem]; // YMMV
       OkButtonLabel := 'Selecionar';
-      DefaultFolder := EmptyStr;
+      DefaultFolder := FDiretorioPadrao;
       FileName := EmptyStr;
       if Execute then
-        TLocalizadorDeScript.New(FArquivos).Localizar(FileName);
+        ContainerDI.Resolve<ILocalizadorDeScript>.SetDataSet(FArquivos).Localizar(FileName);
     finally
       Free;
     end

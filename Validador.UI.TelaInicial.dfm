@@ -3,7 +3,6 @@ inherited TelaInicial: TTelaInicial
   Caption = 'Validador dbChange'
   ClientHeight = 463
   ClientWidth = 686
-  Position = poDesktopCenter
   ExplicitWidth = 702
   ExplicitHeight = 502
   PixelsPerInch = 96
@@ -88,6 +87,7 @@ inherited TelaInicial: TTelaInicial
     Width = 329
     Height = 125
     Cursor = crHandPoint
+    Enabled = False
     Color = 16744448
     Ctl3D = False
     Font.Charset = ANSI_CHARSET

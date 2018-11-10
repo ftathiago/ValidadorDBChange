@@ -52,7 +52,6 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
       Enabled = False
       ReadOnly = True
       TabOrder = 0
-      ExplicitWidth = 703
     end
   end
   object PageControl1: TPageControl
@@ -60,15 +59,11 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
     Top = 89
     Width = 1071
     Height = 573
-    ActivePage = tbsScript
+    ActivePage = tbsRelacaoScriptArquivo
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 75
-    ExplicitWidth = 813
-    ExplicitHeight = 433
     object tbsScript: TTabSheet
       Caption = 'Scripts'
-      ExplicitHeight = 551
       object DBGrid1: TDBGrid
         Left = 0
         Top = 68
@@ -124,8 +119,6 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
     end
     object TabSheet1: TTabSheet
       Caption = 'XML (Texto)'
-      ExplicitWidth = 805
-      ExplicitHeight = 397
       object memXML: TMemo
         Left = 0
         Top = 49
@@ -134,9 +127,6 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitTop = 33
-        ExplicitWidth = 805
-        ExplicitHeight = 364
       end
       object Panel1: TPanel
         Left = 0
@@ -166,7 +156,6 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
     object tbsRelacaoScriptArquivo: TTabSheet
       Caption = 'Rela'#231#227'o Script x Arquivo'
       ImageIndex = 2
-      ExplicitHeight = 551
       object DBGrid2: TDBGrid
         Left = 0
         Top = 0
@@ -295,6 +284,8 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
     Top = 171
   end
   object cdsAnalise: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
     IndexFieldNames = 'NOME_SCRIPT'
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -303,6 +294,7 @@ inherited frmValidadorDBChange: TfrmValidadorDBChange
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
     Left = 328
     Top = 256
     object cdsAnaliseNOME_SCRIPT: TStringField

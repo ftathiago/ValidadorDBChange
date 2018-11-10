@@ -50,7 +50,7 @@ begin
   Result := ParamStr(1);
   if Result.Trim.IsEmpty then
     Result := ExtractFilePath(ParamStr(0));
-  Result := IncludeTrailingBackslash(Result);
+  Result := IncludeTrailingPathDelimiter(Result);
 end;
 
 function TFormBase.PodeFecharForm: Boolean;

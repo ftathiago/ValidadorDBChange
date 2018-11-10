@@ -12,7 +12,7 @@ object FormBase: TFormBase
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCloseQuery = FormCloseQuery
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96

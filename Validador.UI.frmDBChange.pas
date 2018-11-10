@@ -1,4 +1,4 @@
-unit frmDBChange;
+unit Validador.UI.frmDBChange;
 
 interface
 
@@ -85,7 +85,7 @@ implementation
 {$R *.dfm}
 
 uses
-  System.StrUtils, uLocalizadorScript, uAnalizadorScript;
+  System.StrUtils, Validador.Core.LocalizadorScript, Validador.Core.AnalisadorScript, Validador.DI;
 
 procedure TfrmValidadorDBChange.AbrirDBChange(const AFileName: TFileName);
 var
@@ -123,7 +123,13 @@ end;
 
 procedure TfrmValidadorDBChange.AnalisarClick(Sender: TObject);
 begin
-  TAnalisadorScript.New(cdsAnalise, cdsDBChange, cdsArquivos).Analisar;
+  cdsAnalise.Open;
+  ContainerDI.Resolve<IAnalisadorScript>
+    .SetAnalise(cdsAnalise)
+    .SetDBChange(cdsDBChange)
+    .SetArquivos(cdsArquivos)
+    .SetDiretorioPadrao(DiretorioBase)
+    .Analisar;
 end;
 
 procedure TfrmValidadorDBChange.AplicarFiltro(const AFiltro: TTipoFiltro);
