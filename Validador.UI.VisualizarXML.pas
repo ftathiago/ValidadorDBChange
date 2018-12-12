@@ -65,11 +65,21 @@ end;
 procedure TVisualizarXML.actSalvarArquivoExecute(Sender: TObject);
 var
   _xmlDocument: IXMLDocument;
+  _stream: TMemoryStream;
 begin
   if not SaveDialog.Execute then
     Exit;
   _xmlDocument := GetXMLDocument;
   _xmlDocument.SaveToFile(SaveDialog.FileName);
+
+  _stream := TMemoryStream.Create;
+  try
+    _xmlDocument.SaveToStream(_stream);
+    _stream.Position := 0;
+    _stream.SaveToFile(SaveDialog.FileName);
+  finally
+    FreeAndNil(_stream);
+  end;
 end;
 
 procedure TVisualizarXML.actSelecionarTudoExecute(Sender: TObject);

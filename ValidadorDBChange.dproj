@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>ValidadorDBChange.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -95,7 +95,7 @@
         <DCC_UNIT_PLATFORM>false</DCC_UNIT_PLATFORM>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_UnitSearchPath>C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton\lib;C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton;C:\Users\ftath\Documents\EmbarcaderoConference2018\spring4d\Source\Core\Container;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>C:\Users\ftath\Documents\Embarcadero\Studio\Projects\CardButton\lib;C:\Users\ftath\Documents\EmbarcaderoConference2018\spring4d\Source\Core\Container;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Icon_MainIcon>ValidadorDBChange_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">

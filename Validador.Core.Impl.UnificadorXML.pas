@@ -84,7 +84,7 @@ begin
   Validador.Data.dbChangeXML.AtribuirNome(_xmlNovoScript, _xmlScript.Text, _xmlScript.A_name);
   if not _xmlScript.Version.Trim.IsEmpty then
     _xmlNovoScript.Version := _xmlScript.Version;
-  if _xmlScript.X_has_pos.Trim.IsEmpty then
+  if not _xmlScript.X_has_pos.Trim.IsEmpty then
     _xmlNovoScript.X_has_pos := _xmlScript.X_has_pos;
   if not _xmlScript.Description.Trim.IsEmpty then
     _xmlNovoScript.Description := _xmlScript.Description;

@@ -33,7 +33,6 @@ type
     procedure ConverterParaDataSet(_xmlUnificado: IXMLDocument; _dbChangeDataSet: TFDDbChange);
     procedure GerarXMLSemRepetidos(const ADbChangeDataSet: TFDDbChange);
     procedure MostrarXML(_novoXML: IXMLDocument);
-    { Private declarations }
   public
     procedure AfterConstruction; override;
   end;
@@ -127,7 +126,6 @@ begin
   _novoXML := TXMLDocument.Create(nil);
   _novoXML.Options := [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix,
     doNamespaceDecl, doAutoSave];
-  // _novoXML.Active := True;
   ADbChangeDataSet.MarcarRepetidos;
 
   _conversor := ContainerDI.Resolve<IConversorXMLDataSet>;
